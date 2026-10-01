@@ -11,6 +11,7 @@ import { ConversationItemComponent } from './conversation-item.component';
   templateUrl: './ai-chat-sidebar.component.html',
   styleUrl: './ai-chat-sidebar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '[class.open]': 'open()' },
 })
 export class AiChatSidebarComponent {
   open = input.required<boolean>();
