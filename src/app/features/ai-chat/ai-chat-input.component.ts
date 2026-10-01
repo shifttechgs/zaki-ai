@@ -12,8 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AiChatService } from './ai-chat.service';
 
-// SpeechRecognition is not in the default TypeScript lib — cast via window
-type SR = typeof SpeechRecognition;
+// SpeechRecognition is not available in all TS lib targets — use any
+type SR = any;
 
 @Component({
   selector: 'app-ai-chat-input',
@@ -34,7 +34,7 @@ export class AiChatInputComponent {
     !!((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition);
 
   private textareaRef = viewChild<ElementRef<HTMLTextAreaElement>>('textarea');
-  private recognition: InstanceType<SR> | null = null;
+  private recognition: any = null;
 
   constructor() {
     inject(DestroyRef).onDestroy(() => this.recognition?.abort());

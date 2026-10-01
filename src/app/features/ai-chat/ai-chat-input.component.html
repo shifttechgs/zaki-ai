@@ -1,34 +1,12 @@
-<div class="glass-wrap" [class.listening]="isListening()">
+<div class="input-shell">
+  <div class="pill" [class.listening]="isListening()">
 
-  <!-- Textarea -->
-  <textarea
-    #textarea
-    class="input-field"
-    placeholder="Ask anything…"
-    [value]="message()"
-    (input)="onInput($event)"
-    (keydown)="onKeydown($event)"
-    rows="1"
-    aria-label="Message input"
-    aria-multiline="true"
-    [disabled]="service.isResponding()"
-  ></textarea>
-
-  <!-- Recording label -->
-  @if (isListening()) {
-    <div class="recording-label">
-      <span class="rec-dot"></span>
-      Listening…
-    </div>
-  }
-
-  <!-- Action row: mic left — send right -->
-  <div class="actions-row">
-    <div class="left-actions">
+    <!-- Left slot: voice button -->
+    <div class="pill-left">
       @if (voiceSupported) {
         <button
           mat-icon-button
-          class="action-btn mic-btn"
+          class="pill-btn mic-btn"
           [class.recording]="isListening()"
           (click)="toggleVoice()"
           [attr.aria-label]="isListening() ? 'Stop recording' : 'Start voice input'"
@@ -41,7 +19,22 @@
       }
     </div>
 
-    <div class="right-actions">
+    <!-- Textarea grows between the two button slots -->
+    <textarea
+      #textarea
+      class="input-field"
+      [placeholder]="isListening() ? 'Listening…' : 'Message Zaki…'"
+      [value]="message()"
+      (input)="onInput($event)"
+      (keydown)="onKeydown($event)"
+      rows="1"
+      aria-label="Message input"
+      aria-multiline="true"
+      [disabled]="service.isResponding()"
+    ></textarea>
+
+    <!-- Right slot: send button -->
+    <div class="pill-right">
       <button
         mat-icon-button
         class="send-btn"
@@ -55,16 +48,10 @@
         <mat-icon>arrow_upward</mat-icon>
       </button>
     </div>
+
   </div>
 
-</div>
-
-<!-- Footer -->
-<div class="input-footer">
-  <div class="model-pill">
-    <mat-icon class="model-icon">smart_toy</mat-icon>
-    Zaki
-  </div>
-  <span class="sep">·</span>
-  <span class="disclaimer">AI can make mistakes. Check important info.</span>
+  <p class="disclaimer">
+    Zaki can make mistakes. Check important info.
+  </p>
 </div>

@@ -1,49 +1,63 @@
 .chat-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
-  height: 60px;
-  padding: 0 20px 0 8px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  height: 56px;
+  padding: 0 8px;
+  background: #fff;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   flex-shrink: 0;
-  position: relative;
-  z-index: 10;
 }
 
-.left {
+.col {
   display: flex;
   align-items: center;
-  gap: 2px;
+
+  &.center { justify-content: center; }
+  &.right  { justify-content: flex-end; }
 }
 
-.title {
-  font-size: 16px;
-  font-weight: 700;
+.icon-btn {
+  color: var(--text-secondary) !important;
+
+  &:hover { color: var(--text-primary) !important; }
+
+  mat-icon { font-size: 20px; width: 20px; height: 20px; }
+}
+
+// Centered model selector (looks like a dropdown trigger)
+.model-selector {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  padding: 5px 10px;
+  cursor: pointer;
   color: var(--text-primary);
-  letter-spacing: -0.02em;
-  margin: 0;
-}
+  transition: background 150ms ease;
 
-.model-chip {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--primary);
-  background: var(--primary-50);
-  border: 1px solid var(--primary-100);
-  border-radius: 999px;
-  padding: 4px 12px 4px 8px;
-  letter-spacing: 0;
+  &:hover { background: rgba(0, 0, 0, 0.04); }
 }
 
 .model-icon {
-  font-size: 14px;
-  width: 14px;
-  height: 14px;
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
   color: var(--primary);
+}
+
+.model-name {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.caret {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: var(--text-secondary);
 }

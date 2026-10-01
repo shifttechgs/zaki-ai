@@ -1,7 +1,8 @@
 <header class="chat-header">
-  <div class="left">
+  <div class="col left">
     <button
       mat-icon-button
+      class="icon-btn"
       (click)="toggleSidebar.emit()"
       [attr.aria-label]="sidebarOpen() ? 'Close sidebar' : 'Open sidebar'"
       [attr.aria-expanded]="sidebarOpen()"
@@ -9,13 +10,19 @@
     >
       <mat-icon>{{ sidebarOpen() ? 'menu_open' : 'menu' }}</mat-icon>
     </button>
-    <h1 class="title">AI Chat</h1>
   </div>
 
-  <div class="right">
-    <div class="model-chip">
-      <mat-icon class="model-icon">smart_toy</mat-icon>
-      <span>Zaki</span>
-    </div>
+  <div class="col center">
+    <button class="model-selector" type="button">
+      <mat-icon class="model-icon">auto_awesome</mat-icon>
+      <span class="model-name">Zaki</span>
+      <mat-icon class="caret">expand_more</mat-icon>
+    </button>
+  </div>
+
+  <div class="col right">
+    <button mat-icon-button class="icon-btn" aria-label="New chat" type="button">
+      <mat-icon>edit_square</mat-icon>
+    </button>
   </div>
 </header>

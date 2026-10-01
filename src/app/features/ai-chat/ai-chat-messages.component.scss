@@ -2,70 +2,62 @@
   display: flex;
   flex: 1;
   overflow-y: auto;
-  background:
-    radial-gradient(circle at 1px 1px, rgba(99,102,241,0.06) 1px, transparent 0) 0 0 / 28px 28px,
-    var(--bg-page);
+  background: #fff;
   scrollbar-width: thin;
-  scrollbar-color: rgba(0,0,0,0.10) transparent;
+  scrollbar-color: rgba(0,0,0,0.08) transparent;
 }
 
 .messages {
   display: flex;
   flex-direction: column;
-  padding: 28px 28px 8px;
+  padding: 32px 24px 16px;
   width: 100%;
-  max-width: 820px;
+  max-width: 760px;
   margin: 0 auto;
 }
 
 // Typing indicator
 .typing-indicator {
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 20px;
-  animation: fadeInUp 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  animation: fadeInUp 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .typing-avatar {
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
   background: var(--gradient-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  margin-top: 2px;
-  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.25);
 
   mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
     color: #fff;
   }
 }
 
-.typing-bubble {
+.typing-dots {
   display: flex;
   align-items: center;
-  gap: 5px;
-  background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  border-radius: 4px 20px 20px 20px;
-  padding: 14px 18px;
-  box-shadow: var(--shadow-card);
+  gap: 4px;
+  padding: 4px 0;
 
   span {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: var(--primary-light);
+    background: var(--text-tertiary);
     animation: dot-bounce 1.3s infinite ease-in-out;
 
-    &:nth-child(2) { animation-delay: 0.16s; background: var(--primary); }
-    &:nth-child(3) { animation-delay: 0.32s; background: var(--primary-dark); }
+    &:nth-child(2) { animation-delay: 0.15s; }
+    &:nth-child(3) { animation-delay: 0.30s; }
   }
 }
 
