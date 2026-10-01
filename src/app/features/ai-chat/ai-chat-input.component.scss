@@ -1,65 +1,145 @@
 :host {
   display: block;
   background: var(--bg-page);
-  padding: 12px 20px 20px;
+  padding: 10px 20px 18px;
   flex-shrink: 0;
 }
 
-// Glass container wrapping the whole input zone
+// ── Glass container ───────────────────────────────────────────────────────────
 .glass-wrap {
-  background: rgba(255, 255, 255, 0.90);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(0, 0, 0, 0.07);
-  border-radius: 18px;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(255,255,255,0.6) inset;
-  padding: 10px 10px 10px 16px;
-  transition: box-shadow 200ms ease, border-color 200ms ease;
+  border-radius: 20px;
+  box-shadow:
+    0 2px 16px rgba(0, 0, 0, 0.05),
+    0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+  padding: 14px 12px 10px 16px;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
 
-  &:focus-within {
+  &:focus-within,
+  &.listening {
     border-color: rgba(99, 102, 241, 0.30);
     box-shadow:
-      0 2px 16px rgba(0, 0, 0, 0.06),
+      0 2px 20px rgba(0, 0, 0, 0.06),
       0 0 0 3px rgba(99, 102, 241, 0.10);
+  }
+
+  // Red tint while recording
+  &.listening {
+    border-color: rgba(239, 68, 68, 0.25);
+    box-shadow:
+      0 2px 20px rgba(0, 0, 0, 0.06),
+      0 0 0 3px rgba(239, 68, 68, 0.08);
   }
 }
 
-.input-row {
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
-}
-
+// ── Textarea ──────────────────────────────────────────────────────────────────
 .input-field {
-  flex: 1;
+  display: block;
+  width: 100%;
   background: transparent;
   border: none;
   outline: none;
   font-family: inherit;
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: 14.5px;
+  line-height: 1.65;
   color: var(--text-primary);
   resize: none;
-  min-height: 24px;
-  max-height: 120px;
+  min-height: 26px;
+  max-height: 140px;
   overflow-y: auto;
   padding: 0;
   letter-spacing: -0.005em;
 
   &::placeholder { color: var(--text-tertiary); }
-
-  &:disabled { opacity: 0.5; cursor: not-allowed; }
+  &:disabled { opacity: 0.45; cursor: not-allowed; }
 }
 
-// Circular gradient send button
+// ── Recording label ───────────────────────────────────────────────────────────
+.recording-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #EF4444;
+  margin-top: 6px;
+  animation: fadeInUp 180ms ease both;
+}
+
+.rec-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #EF4444;
+  animation: rec-blink 1s ease-in-out infinite;
+}
+
+// ── Action row ────────────────────────────────────────────────────────────────
+.actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.left-actions,
+.right-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+// ── Shared action button base ─────────────────────────────────────────────────
+.action-btn {
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 10px !important;
+  transition: background 150ms ease, transform 120ms ease, box-shadow 150ms ease !important;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+// ── Mic button ────────────────────────────────────────────────────────────────
+.mic-btn {
+  background: rgba(0, 0, 0, 0.04) !important;
+
+  mat-icon { color: var(--text-secondary) !important; }
+
+  &:hover {
+    background: rgba(99, 102, 241, 0.08) !important;
+    mat-icon { color: var(--primary) !important; }
+  }
+
+  // Active recording state
+  &.recording {
+    background: #EF4444 !important;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15) !important;
+    animation: mic-pulse 1.4s ease-in-out infinite;
+
+    mat-icon { color: #fff !important; }
+
+    &:hover {
+      background: #DC2626 !important;
+      mat-icon { color: #fff !important; }
+    }
+  }
+}
+
+// ── Send button ───────────────────────────────────────────────────────────────
 .send-btn {
-  width: 38px !important;
-  height: 38px !important;
-  border-radius: 12px !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 11px !important;
   background: var(--gradient-primary) !important;
   box-shadow: 0 2px 8px rgba(99, 102, 241, 0.35) !important;
-  flex-shrink: 0;
-  transition: transform 150ms ease, box-shadow 150ms ease, opacity 150ms ease !important;
+  transition: transform 150ms ease, box-shadow 150ms ease !important;
 
   mat-icon {
     font-size: 18px;
@@ -71,24 +151,23 @@
   &[disabled] {
     background: rgba(0, 0, 0, 0.06) !important;
     box-shadow: none !important;
-
     mat-icon { color: var(--text-disabled) !important; }
   }
 
   &:not([disabled]):hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.45) !important;
+    transform: scale(1.06);
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.45) !important;
   }
 
-  &:not([disabled]):active { transform: scale(0.97); }
+  &:not([disabled]):active { transform: scale(0.96); }
 }
 
-// Footer meta row
+// ── Footer ────────────────────────────────────────────────────────────────────
 .input-footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 6px;
   margin-top: 10px;
 }
 
@@ -112,7 +191,23 @@
   color: var(--primary);
 }
 
+.sep {
+  font-size: 11px;
+  color: var(--text-disabled);
+}
+
 .disclaimer {
   font-size: 11px;
   color: var(--text-tertiary);
+}
+
+// ── Keyframes ─────────────────────────────────────────────────────────────────
+@keyframes mic-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15) !important; }
+  50%       { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0.05) !important; }
+}
+
+@keyframes rec-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
 }
