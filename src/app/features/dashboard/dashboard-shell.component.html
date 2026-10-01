@@ -1,0 +1,50 @@
+<div class="shell">
+
+  <aside class="sidebar">
+
+    <!-- Brand -->
+    <div class="brand">
+      <div class="brand-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2l2.09 6.26H21l-5.47 3.97 2.09 6.26L12 14.52l-5.62 3.97 2.09-6.26L3 8.26h6.91L12 2z"/>
+        </svg>
+      </div>
+      <span class="brand-name">Zaki AI</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav" aria-label="Main navigation">
+      @for (item of navItems(); track item.label) {
+        <a
+          class="nav-link"
+          [routerLink]="item.path"
+          routerLinkActive="nav-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span>{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+
+    <!-- Sidebar footer -->
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar">{{ auth.user()?.initials }}</div>
+        <div class="user-meta">
+          <span class="user-name">{{ auth.user()?.name }}</span>
+          <span class="user-role">{{ userRoleLabel() }}</span>
+        </div>
+      </div>
+      <button class="logout-btn" type="button" (click)="logout()" aria-label="Log out">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
+
+  </aside>
+
+  <main class="main">
+    <router-outlet />
+  </main>
+
+</div>

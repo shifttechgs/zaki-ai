@@ -1,6 +1,5 @@
 :host {
   display: block;
-  background: #fff;
   padding: 8px 16px 20px;
   flex-shrink: 0;
 }
@@ -15,28 +14,22 @@
   margin: 0 auto;
 }
 
-// ── Pill ──────────────────────────────────────────────────────────────────────
-.pill {
-  display: flex;
-  align-items: flex-end;   // buttons anchor to bottom as textarea grows
+// ── Card ──────────────────────────────────────────────────────────────────────
+.input-card {
   width: 100%;
-  background: #F4F4F4;
-  border: 1.5px solid transparent;
-  border-radius: 16px;
-  // Padding: top/sides give inner breathing room; bottom aligns button baseline
-  padding: 10px 10px 10px 16px;
-  gap: 10px;
-  transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+  background: #fff;
+  border: 1.5px solid rgba(0, 0, 0, 0.08);
+  border-radius: 22px;
+  padding: 16px 12px 10px 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
 
   &:focus-within {
-    background: #fff;
-    border-color: rgba(0, 0, 0, 0.10);
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.07),
-                0 1px 4px rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.04);
   }
 
   &.listening {
-    background: #fff;
     border-color: rgba(239, 68, 68, 0.22);
     box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.07);
   }
@@ -44,90 +37,150 @@
 
 // ── Textarea ──────────────────────────────────────────────────────────────────
 .input-field {
-  flex: 1;
+  display: block;
+  width: 100%;
   background: transparent;
   border: none;
   outline: none;
   font-family: inherit;
-  font-size: 15px;
-  line-height: 1.55;          // 15 × 1.55 ≈ 23px → matches button height
+  font-size: 16px;
+  line-height: 1.5;
   color: var(--text-primary);
   resize: none;
-  min-height: 23px;           // single line height, no extra padding needed
+  min-height: 26px;
   max-height: 200px;
   overflow-y: auto;
-  padding: 0;
+  padding: 0 0 14px;
   letter-spacing: -0.005em;
-  // Shift text up by 5px so single-line text centers against the 34px button
-  margin-bottom: 5px;
 
-  &::placeholder { color: var(--text-tertiary); }
+  &::placeholder { color: #9CA3AF; }
   &:disabled      { opacity: 0.4; cursor: not-allowed; }
 }
 
-// ── Button slot ───────────────────────────────────────────────────────────────
-.btn-slot {
-  flex-shrink: 0;
+// ── Bottom toolbar ────────────────────────────────────────────────────────────
+.toolbar {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 }
 
-// ── Base for all action buttons ───────────────────────────────────────────────
-// Plain <button> — no Material wrapper — gives us full layout control
-.action-btn {
+.toolbar-left,
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+// ── Generic round tool button (+, mic) ────────────────────────────────────────
+.tool-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: transparent;
   border: none;
-  padding: 0;
   cursor: pointer;
-  transition: background 140ms ease, transform 120ms ease, box-shadow 140ms ease;
+  color: #6B7280;
   flex-shrink: 0;
+  transition: background 140ms ease, color 140ms ease;
 
   svg { display: block; flex-shrink: 0; }
+
+  &:hover         { background: rgba(0, 0, 0, 0.06); color: #374151; }
   &:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
-  &:disabled { cursor: default; }
+  &.mic-active    { color: #EF4444; background: rgba(239, 68, 68, 0.08); }
 }
 
-// ── Mic — neutral grey, highlights indigo on hover ────────────────────────────
-.mic-btn {
+// ── Model chip ────────────────────────────────────────────────────────────────
+.model-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px 4px 4px;
   background: transparent;
-  color: #9CA3AF;
+  border: 1.5px solid transparent;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  transition: background 140ms ease, border-color 140ms ease;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.06);
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.09);
+  }
+  &:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+}
+
+.model-chip-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  svg { color: #fff; }
+}
+
+// ── Think button ──────────────────────────────────────────────────────────────
+.think-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  background: transparent;
+  border: 1.5px solid rgba(0, 0, 0, 0.10);
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6B7280;
+  white-space: nowrap;
+  transition: background 140ms ease, border-color 140ms ease, color 140ms ease;
+
+  svg { flex-shrink: 0; }
+
+  &:hover {
+    background: rgba(99, 102, 241, 0.05);
+    border-color: rgba(99, 102, 241, 0.22);
     color: var(--primary);
   }
+  &:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 }
 
-// ── Stop — solid red with pulse ring ─────────────────────────────────────────
-.stop-btn {
-  background: #EF4444;
-  color: #fff;
-  animation: pulse-ring 1.5s ease-in-out infinite;
-
-  &:hover { background: #DC2626; }
-}
-
-// ── Send — dark, matches user bubble colour ───────────────────────────────────
+// ── Send / voice button ───────────────────────────────────────────────────────
 .send-btn {
-  background: #1C1C1E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: none;
+  cursor: pointer;
   color: #fff;
+  flex-shrink: 0;
+  transition: background 140ms ease, transform 120ms ease, opacity 140ms ease;
 
-  &:hover:not(:disabled) {
-    background: #2C2C2E;
-    transform: scale(1.05);
-  }
+  svg { display: block; flex-shrink: 0; }
 
+  &:hover:not(:disabled) { background: var(--primary-dark); transform: scale(1.05); }
   &:active:not(:disabled) { transform: scale(0.95); }
+  &:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
 
   &:disabled {
-    background: rgba(0, 0, 0, 0.07);
-    color: rgba(0, 0, 0, 0.18);
+    opacity: 0.30;
+    cursor: default;
+    transform: none;
   }
 }
 
@@ -140,7 +193,7 @@
   letter-spacing: 0.01em;
 }
 
-// ── Animations ────────────────────────────────────────────────────────────────
+// ── Listening pulse on send btn (when stop is shown) ─────────────────────────
 @keyframes pulse-ring {
   0%, 100% { box-shadow: 0 0 0 0   rgba(239, 68, 68, 0.30); }
   50%       { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }

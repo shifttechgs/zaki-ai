@@ -1,0 +1,301 @@
+// ── Page shell ────────────────────────────────────────────────────────────────
+:host { display: block; }
+
+.auth-page {
+  min-height: 100vh;
+  background: #F6F9FC;
+  display: flex;
+  flex-direction: column;
+}
+
+// ── Brand header ──────────────────────────────────────────────────────────────
+.auth-header {
+  display: flex;
+  justify-content: center;
+  padding: 40px 24px 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.brand-icon {
+  width: 36px;
+  height: 36px;
+  background: #7C3AED;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  svg { color: #fff; }
+}
+
+.brand-name {
+  font-size: 19px;
+  font-weight: 700;
+  color: #0A2540;
+  letter-spacing: -0.03em;
+}
+
+// ── Main / card ───────────────────────────────────────────────────────────────
+.auth-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px 56px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 448px;
+  background: #fff;
+  border: 1px solid #DDE3EA;
+  border-radius: 10px;
+  padding: 44px 40px 36px;
+  box-shadow:
+    0 0 0 1px rgba(10, 37, 64, 0.03),
+    0 2px 4px rgba(10, 37, 64, 0.04),
+    0 10px 32px rgba(10, 37, 64, 0.05);
+
+  @media (max-width: 500px) {
+    border-radius: 0;
+    border-inline: none;
+    box-shadow: none;
+    padding: 32px 20px 28px;
+  }
+}
+
+.card-head { margin-bottom: 28px; }
+
+.auth-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0A2540;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.auth-sub {
+  font-size: 14px;
+  color: #697386;
+  line-height: 1.55;
+}
+
+// ── Google button ─────────────────────────────────────────────────────────────
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 44px;
+  background: #fff;
+  border: 1.5px solid #C8D4DC;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: #0A2540;
+  cursor: pointer;
+  letter-spacing: -0.01em;
+  transition: background 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+
+  &:hover {
+    background: #FAFBFC;
+    border-color: #9CAAB6;
+    box-shadow: 0 1px 4px rgba(10, 37, 64, 0.06);
+  }
+  &:focus-visible { outline: 2px solid #7C3AED; outline-offset: 2px; }
+}
+
+// ── Divider ───────────────────────────────────────────────────────────────────
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #E4EAF0;
+  }
+
+  span {
+    font-size: 11px;
+    font-weight: 600;
+    color: #9CAAB6;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+}
+
+// ── Form ──────────────────────────────────────────────────────────────────────
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #425466;
+    letter-spacing: 0.005em;
+  }
+
+  input {
+    height: 44px;
+    padding: 0 13px;
+    border: 1.5px solid #C8D4DC;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14.5px;
+    color: #0A2540;
+    background: #fff;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 140ms ease, box-shadow 140ms ease;
+
+    &::placeholder { color: #9CAAB6; }
+
+    &:focus {
+      border-color: #7C3AED;
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.13);
+    }
+  }
+}
+
+.input-wrap {
+  position: relative;
+
+  input { padding-right: 42px; }
+}
+
+.eye-btn {
+  position: absolute;
+  right: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #697386;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  transition: color 140ms ease, background 140ms ease;
+
+  &:hover { color: #0A2540; background: rgba(0, 0, 0, 0.04); }
+  &:focus-visible { outline: 2px solid #7C3AED; outline-offset: 1px; }
+}
+
+// ── Submit ────────────────────────────────────────────────────────────────────
+.submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 44px;
+  background: #7C3AED;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  cursor: pointer;
+  margin-top: 2px;
+  transition: background 140ms ease, box-shadow 140ms ease, transform 120ms ease;
+
+  &:hover:not(:disabled) {
+    background: #6D28D9;
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.30);
+  }
+  &:active:not(:disabled) { transform: scale(0.99); }
+  &:disabled              { opacity: 0.55; cursor: default; }
+  &:focus-visible         { outline: 2px solid #7C3AED; outline-offset: 3px; }
+}
+
+.spinner {
+  width: 17px;
+  height: 17px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+// ── Links ─────────────────────────────────────────────────────────────────────
+.text-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: #7C3AED;
+  text-decoration: none;
+
+  &:hover { text-decoration: underline; }
+}
+
+// ── Terms text ────────────────────────────────────────────────────────────────
+.terms-text {
+  font-size: 12.5px;
+  color: #9CAAB6;
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 20px;
+
+  .text-link { font-size: inherit; }
+}
+
+// ── Card divider ──────────────────────────────────────────────────────────────
+.card-divider {
+  height: 1px;
+  background: #E4EAF0;
+  margin-bottom: 20px;
+}
+
+// ── Switch prompt ─────────────────────────────────────────────────────────────
+.switch-text {
+  text-align: center;
+  font-size: 13.5px;
+  color: #697386;
+  margin: 0;
+}
+
+// ── Page footer ───────────────────────────────────────────────────────────────
+.page-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 16px 24px 36px;
+
+  a {
+    font-size: 12.5px;
+    color: #9CAAB6;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 120ms ease;
+
+    &:hover { color: #425466; }
+  }
+}

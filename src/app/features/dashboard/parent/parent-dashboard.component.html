@@ -1,0 +1,96 @@
+<div class="page">
+
+  <!-- Page header -->
+  <header class="page-head">
+    <div>
+      <h1>Parent Overview</h1>
+      <p>Monitoring Alex Johnson &middot; Grade 10 &middot; St. Mary's High School</p>
+    </div>
+  </header>
+
+  <!-- Stats row -->
+  <section class="stats-row" aria-label="Key stats">
+    @for (stat of stats; track stat.label) {
+      <div class="stat-card">
+        <div class="stat-icon icon-{{ stat.color }}">
+          <mat-icon>{{ stat.icon }}</mat-icon>
+        </div>
+        <div class="stat-body">
+          <span class="stat-val">{{ stat.value }}</span>
+          <span class="stat-lbl">{{ stat.label }}</span>
+          <span class="stat-sub">{{ stat.sub }}</span>
+        </div>
+      </div>
+    }
+  </section>
+
+  <!-- Content grid -->
+  <div class="content-grid">
+
+    <!-- Activity feed -->
+    <div>
+      <div class="card">
+        <div class="card-head">
+          <h2>Recent Activity</h2>
+        </div>
+        <div class="feed">
+          @for (item of activity; track item.id) {
+            <div class="feed-item">
+              <div class="feed-icon feed-{{ item.type }}">
+                <mat-icon>{{ item.icon }}</mat-icon>
+              </div>
+              <div class="feed-body">
+                <p class="feed-text">{{ item.text }}</p>
+                <span class="feed-time">{{ item.time }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Right column -->
+    <div class="col-right">
+
+      <!-- School events -->
+      <div class="card">
+        <div class="card-head">
+          <h2>School Events</h2>
+        </div>
+        <ul class="event-list" aria-label="Upcoming school events">
+          @for (event of events; track event.id) {
+            <li class="event-item">
+              <span class="event-date">{{ event.date }}</span>
+              <div class="event-info">
+                <span class="event-title">{{ event.title }}</span>
+                <span class="event-tag tag-{{ event.tag | lowercase }}">{{ event.tag }}</span>
+              </div>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- Teacher messages -->
+      <div class="card">
+        <div class="card-head">
+          <h2>Teacher Messages</h2>
+        </div>
+        <ul class="msg-list" aria-label="Teacher messages">
+          @for (msg of messages; track msg.id) {
+            <li class="msg-item">
+              <div class="msg-meta">
+                <span class="msg-from">{{ msg.from }}</span>
+                <span class="msg-time">{{ msg.time }}</span>
+              </div>
+              <span class="msg-subject">{{ msg.subject }}</span>
+              <p class="msg-preview">{{ msg.preview }}</p>
+            </li>
+          }
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

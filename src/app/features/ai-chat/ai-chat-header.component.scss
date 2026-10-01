@@ -14,7 +14,7 @@
   align-items: center;
 
   &.center { justify-content: center; }
-  &.right  { justify-content: flex-end; }
+  &.right  { justify-content: flex-end; gap: 8px; padding-right: 4px; }
 }
 
 .icon-btn {
@@ -60,4 +60,60 @@
   width: 16px;
   height: 16px;
   color: var(--text-secondary);
+}
+
+.sign-up-btn {
+  height: 36px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: transparent;
+  border: 1.5px solid rgba(0, 0, 0, 0.14);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background  160ms ease,
+    border-color 160ms ease,
+    color        160ms ease,
+    transform    120ms ease,
+    box-shadow   160ms ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.22);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  }
+  &:active        { transform: scale(0.975); }
+  &:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+}
+
+.sign-in-btn {
+  height: 36px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: #7C3AED;
+  border: none;
+  color: #fff;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(124, 58, 237, 0.30), 0 4px 14px rgba(124, 58, 237, 0.22);
+  transition:
+    background  160ms ease,
+    box-shadow  160ms ease,
+    transform   120ms ease;
+
+  &:hover {
+    background: #6D28D9;
+    box-shadow: 0 2px 6px rgba(124, 58, 237, 0.36), 0 6px 20px rgba(124, 58, 237, 0.28);
+  }
+  &:active        { transform: scale(0.975); }
+  &:focus-visible { outline: 2px solid #7C3AED; outline-offset: 3px; }
 }

@@ -1,0 +1,101 @@
+<div class="page">
+
+  <!-- Page header -->
+  <header class="page-head">
+    <div>
+      <h1>Good morning, Alex</h1>
+      <p>{{ today | date:'EEEE, d MMMM y' }} &middot; Term 3, Week 8</p>
+    </div>
+  </header>
+
+  <!-- Stats row -->
+  <section class="stats-row" aria-label="Key stats">
+    @for (stat of stats; track stat.label) {
+      <div class="stat-card">
+        <div class="stat-icon icon-{{ stat.color }}">
+          <mat-icon>{{ stat.icon }}</mat-icon>
+        </div>
+        <div class="stat-body">
+          <span class="stat-val">{{ stat.value }}</span>
+          <span class="stat-lbl">{{ stat.label }}</span>
+          <span class="stat-sub">{{ stat.sub }}</span>
+        </div>
+      </div>
+    }
+  </section>
+
+  <!-- Content grid -->
+  <div class="content-grid">
+
+    <!-- Today's schedule -->
+    <div class="card">
+      <div class="card-head">
+        <h2>Today's Schedule</h2>
+        <span class="chip">5 classes</span>
+      </div>
+      <ul class="sched-list" aria-label="Today's schedule">
+        @for (item of schedule; track item.id) {
+          <li class="sched-item {{ item.status }}">
+            <span class="sched-time">{{ item.time }}</span>
+            <div class="sched-info">
+              <span class="sched-name">{{ item.subject }}</span>
+              <span class="sched-meta">
+                @if (item.teacher) { {{ item.teacher }} &middot; }{{ item.room }}
+              </span>
+            </div>
+            @if (item.status === 'current') {
+              <span class="now-badge">Now</span>
+            }
+          </li>
+        }
+      </ul>
+    </div>
+
+    <!-- Right column -->
+    <div class="col-right">
+
+      <!-- Due soon -->
+      <div class="card">
+        <div class="card-head">
+          <h2>Due Soon</h2>
+          <span class="chip chip-warn">3</span>
+        </div>
+        <ul class="assign-list" aria-label="Assignments due soon">
+          @for (item of assignments; track item.id) {
+            <li class="assign-item">
+              <span class="dot" [class.dot-urgent]="item.urgent" [class.dot-normal]="!item.urgent"></span>
+              <div class="assign-body">
+                <span class="task-name">{{ item.name }}</span>
+                <span class="task-meta">{{ item.subject }} &middot; {{ item.due }}</span>
+              </div>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- Recent grades -->
+      <div class="card">
+        <div class="card-head">
+          <h2>Recent Grades</h2>
+        </div>
+        <ul class="grade-list" aria-label="Recent grades">
+          @for (item of grades; track item.id) {
+            <li class="grade-row">
+              <div class="grade-left">
+                <span class="grade-subject">{{ item.subject }}</span>
+                <span class="grade-assignment">{{ item.assignment }}</span>
+              </div>
+              <div class="grade-right">
+                <span class="grade-score">{{ item.score }}</span>
+                <span class="grade-badge grade-{{ item.tier }}">{{ item.letter }}</span>
+              </div>
+            </li>
+          }
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
