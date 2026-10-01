@@ -1,0 +1,40 @@
+<aside
+  class="sidebar"
+  [class.open]="open()"
+  aria-label="Conversation sidebar"
+>
+  <div class="brand">
+    <div class="brand-icon">
+      <mat-icon>auto_awesome</mat-icon>
+    </div>
+    <span class="brand-name">Zaki AI</span>
+  </div>
+
+  <div class="sidebar-top">
+    <button
+      mat-stroked-button
+      class="new-chat-btn"
+      (click)="service.startNewConversation()"
+      aria-label="Start new chat"
+    >
+      <mat-icon>add</mat-icon>
+      New chat
+    </button>
+  </div>
+
+  <div class="divider"></div>
+
+  <nav class="conversations" role="list" aria-label="Conversation history">
+    @for (group of service.groupedConversations(); track group.label) {
+      @if (group.conversations.length > 0) {
+        <p class="group-label">{{ group.label }}</p>
+        @for (conv of group.conversations; track conv.id) {
+          <app-conversation-item
+            [conversation]="conv"
+            [isActive]="service.activeId() === conv.id"
+          />
+        }
+      }
+    }
+  </nav>
+</aside>

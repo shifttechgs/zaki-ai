@@ -1,0 +1,16 @@
+<div
+  class="message"
+  [class.user]="message().role === 'user'"
+  [class.assistant]="message().role === 'assistant'"
+>
+  @if (message().role === 'assistant') {
+    <div class="avatar" aria-hidden="true">
+      <mat-icon>smart_toy</mat-icon>
+    </div>
+  }
+
+  <div class="bubble-wrap">
+    <div class="bubble">{{ message().content }}</div>
+    <span class="timestamp">{{ formatTime(message().timestamp) }}</span>
+  </div>
+</div>

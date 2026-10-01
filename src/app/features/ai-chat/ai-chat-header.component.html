@@ -1,0 +1,21 @@
+<header class="chat-header">
+  <div class="left">
+    <button
+      mat-icon-button
+      (click)="toggleSidebar.emit()"
+      [attr.aria-label]="sidebarOpen() ? 'Close sidebar' : 'Open sidebar'"
+      [attr.aria-expanded]="sidebarOpen()"
+      type="button"
+    >
+      <mat-icon>{{ sidebarOpen() ? 'menu_open' : 'menu' }}</mat-icon>
+    </button>
+    <h1 class="title">AI Chat</h1>
+  </div>
+
+  <div class="right">
+    <div class="model-chip">
+      <mat-icon class="model-icon">smart_toy</mat-icon>
+      <span>Nova 4.5</span>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,20 @@
+:host {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-page);
+}
+
+.chat-body {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}

@@ -1,0 +1,7 @@
+<button class="card" (click)="selected.emit()" type="button">
+  <div class="icon-wrap" [style.background]="gradient()">
+    <mat-icon class="card-icon">{{ icon() }}</mat-icon>
+  </div>
+  <span class="card-title">{{ title() }}</span>
+  <span class="card-desc">{{ description() }}</span>
+</button>

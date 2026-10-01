@@ -1,0 +1,36 @@
+<div
+  class="item"
+  [class.active]="isActive()"
+  (mouseenter)="hovered.set(true)"
+  (mouseleave)="hovered.set(false)"
+  role="listitem"
+>
+  <button
+    class="item-btn"
+    (click)="select()"
+    [attr.aria-current]="isActive() ? 'true' : null"
+    type="button"
+  >
+    <span class="item-title">{{ conversation().title }}</span>
+  </button>
+
+  @if (hovered() || isActive()) {
+    <button
+      mat-icon-button
+      class="menu-btn"
+      [matMenuTriggerFor]="menu"
+      aria-label="Conversation options"
+      (click)="$event.stopPropagation()"
+      type="button"
+    >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  }
+</div>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="delete()" type="button">
+    <mat-icon>delete_outline</mat-icon>
+    <span>Delete</span>
+  </button>
+</mat-menu>

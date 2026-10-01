@@ -1,0 +1,7 @@
+<div class="ai-chat">
+  <app-ai-chat-sidebar [open]="sidebarOpen()" />
+  <app-ai-chat-main
+    [sidebarOpen]="sidebarOpen()"
+    (toggleSidebar)="toggleSidebar()"
+  />
+</div>

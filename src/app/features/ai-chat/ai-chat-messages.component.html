@@ -1,0 +1,25 @@
+<div
+  class="messages"
+  role="log"
+  aria-label="Conversation"
+  aria-live="polite"
+>
+  @for (message of service.activeConversation()?.messages ?? []; track message.id) {
+    <app-chat-message [message]="message" />
+  }
+
+  @if (service.isResponding()) {
+    <div class="typing-indicator">
+      <div class="typing-avatar" aria-hidden="true">
+        <mat-icon>smart_toy</mat-icon>
+      </div>
+      <div class="typing-bubble" aria-label="AI is typing">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  }
+
+  <div #bottom class="scroll-anchor"></div>
+</div>

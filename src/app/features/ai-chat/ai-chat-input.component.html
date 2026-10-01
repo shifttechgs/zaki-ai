@@ -1,0 +1,35 @@
+<div class="glass-wrap">
+  <div class="input-row">
+    <textarea
+      #textarea
+      class="input-field"
+      placeholder="Ask anything…"
+      [value]="message()"
+      (input)="onInput($event)"
+      (keydown)="onKeydown($event)"
+      rows="1"
+      aria-label="Message input"
+      aria-multiline="true"
+      [disabled]="service.isResponding()"
+    ></textarea>
+
+    <button
+      mat-icon-button
+      class="send-btn"
+      (click)="send()"
+      [disabled]="!message().trim() || service.isResponding()"
+      aria-label="Send message"
+      type="button"
+    >
+      <mat-icon>arrow_upward</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="input-footer">
+  <div class="model-pill">
+    <mat-icon class="model-icon">smart_toy</mat-icon>
+    Nova 4.5
+  </div>
+  <span class="disclaimer">AI can make mistakes. Check important info.</span>
+</div>

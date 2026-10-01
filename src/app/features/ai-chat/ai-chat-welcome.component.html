@@ -1,0 +1,32 @@
+<div class="welcome">
+  <div class="content">
+
+    <div class="icon-wrap">
+      <div class="icon-glow"></div>
+      <div class="icon-inner">
+        <mat-icon>auto_awesome</mat-icon>
+      </div>
+    </div>
+
+    <div class="badge">
+      <mat-icon>bolt</mat-icon>
+      Powered by Nova 4.5
+    </div>
+
+    <h2 class="heading">How can I help you <span>today?</span></h2>
+    <p class="subtext">Ask me anything, or pick a suggestion below to get started instantly.</p>
+
+    <div class="suggestions">
+      @for (s of suggestions; track s.title) {
+        <app-suggestion-card
+          [icon]="s.icon"
+          [title]="s.title"
+          [description]="s.description"
+          [gradient]="s.gradient"
+          (selected)="useSuggestion(s.title)"
+        />
+      }
+    </div>
+
+  </div>
+</div>
