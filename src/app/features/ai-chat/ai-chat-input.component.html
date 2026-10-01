@@ -1,25 +1,6 @@
 <div class="input-shell">
   <div class="pill" [class.listening]="isListening()">
 
-    <!-- Left slot: voice button -->
-    <div class="pill-left">
-      @if (voiceSupported) {
-        <button
-          mat-icon-button
-          class="pill-btn mic-btn"
-          [class.recording]="isListening()"
-          (click)="toggleVoice()"
-          [attr.aria-label]="isListening() ? 'Stop recording' : 'Start voice input'"
-          [matTooltip]="isListening() ? 'Stop recording' : 'Voice input'"
-          matTooltipPosition="above"
-          type="button"
-        >
-          <mat-icon>{{ isListening() ? 'stop' : 'mic' }}</mat-icon>
-        </button>
-      }
-    </div>
-
-    <!-- Textarea grows between the two button slots -->
     <textarea
       #textarea
       class="input-field"
@@ -33,25 +14,71 @@
       [disabled]="service.isResponding()"
     ></textarea>
 
-    <!-- Right slot: send button -->
-    <div class="pill-right">
-      <button
-        mat-icon-button
-        class="send-btn"
-        (click)="send()"
-        [disabled]="!message().trim() || service.isResponding()"
-        aria-label="Send message"
-        matTooltip="Send  (Enter)"
-        matTooltipPosition="above"
-        type="button"
-      >
-        <mat-icon>arrow_upward</mat-icon>
-      </button>
-    </div>
+    <!-- Single smart slot: stop → send → mic in priority order -->
+    <div class="btn-slot">
 
+      @if (isListening()) {
+        <!-- Recording: stop square -->
+        <button
+          class="action-btn stop-btn"
+          (click)="toggleVoice()"
+          aria-label="Stop recording"
+          matTooltip="Stop recording"
+          matTooltipPosition="above"
+          type="button"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="3.5"/>
+          </svg>
+        </button>
+
+      } @else if (message().trim()) {
+        <!-- Has text: send arrow -->
+        <button
+          class="action-btn send-btn"
+          (click)="send()"
+          [disabled]="service.isResponding()"
+          aria-label="Send message"
+          matTooltip="Send  ↵"
+          matTooltipPosition="above"
+          type="button"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 19V5"/>
+            <path d="M5 12l7-7 7 7"/>
+          </svg>
+        </button>
+
+      } @else if (voiceSupported) {
+        <!-- Empty + voice available: mic -->
+        <button
+          class="action-btn mic-btn"
+          (click)="toggleVoice()"
+          aria-label="Start voice input"
+          matTooltip="Voice input"
+          matTooltipPosition="above"
+          type="button"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3Z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="22"/>
+            <line x1="8" y1="22" x2="16" y2="22"/>
+          </svg>
+        </button>
+
+      } @else {
+        <!-- Empty + no voice: disabled send -->
+        <button class="action-btn send-btn" disabled aria-label="Send message" type="button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 19V5"/>
+            <path d="M5 12l7-7 7 7"/>
+          </svg>
+        </button>
+      }
+
+    </div>
   </div>
 
-  <p class="disclaimer">
-    Zaki can make mistakes. Check important info.
-  </p>
+  <p class="hint">Zaki can make mistakes. Check important info.</p>
 </div>

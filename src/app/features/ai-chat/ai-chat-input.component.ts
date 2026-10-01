@@ -7,18 +7,15 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AiChatService } from './ai-chat.service';
 
-// SpeechRecognition is not available in all TS lib targets — use any
 type SR = any;
 
 @Component({
   selector: 'app-ai-chat-input',
   standalone: true,
-  imports: [MatButtonModule, MatIconModule, MatTooltipModule],
+  imports: [MatTooltipModule],
   templateUrl: './ai-chat-input.component.html',
   styleUrl: './ai-chat-input.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,7 +24,6 @@ export class AiChatInputComponent {
   protected service = inject(AiChatService);
   protected message = signal('');
   protected isListening = signal(false);
-  protected interimTranscript = signal('');
 
   protected readonly voiceSupported =
     typeof window !== 'undefined' &&
@@ -40,7 +36,6 @@ export class AiChatInputComponent {
     inject(DestroyRef).onDestroy(() => this.recognition?.abort());
   }
 
-  // ── Input ──────────────────────────────────────────────────────────────────
   protected onInput(event: Event): void {
     const ta = event.target as HTMLTextAreaElement;
     this.message.set(ta.value);
@@ -62,55 +57,41 @@ export class AiChatInputComponent {
 
     this.service.sendMessage(content);
     this.message.set('');
-    this.interimTranscript.set('');
 
     const ta = this.textareaRef()?.nativeElement;
     if (ta) { ta.value = ''; ta.style.height = 'auto'; }
   }
 
-  // ── Voice ──────────────────────────────────────────────────────────────────
   protected toggleVoice(): void {
     this.isListening() ? this.stopListening() : this.startListening();
   }
 
   private startListening(): void {
-    const SpeechRecognition: SR =
-      (window as any).SpeechRecognition ?? (window as any).webkitSpeechRecognition;
-    if (!SpeechRecognition) return;
+    const SR: SR = (window as any).SpeechRecognition ?? (window as any).webkitSpeechRecognition;
+    if (!SR) return;
 
-    this.recognition = new SpeechRecognition();
+    this.recognition = new SR();
     this.recognition.continuous = true;
     this.recognition.interimResults = true;
     this.recognition.lang = 'en-US';
 
-    // Track the committed (final) text separately so interim doesn't overwrite it
     let committed = this.message();
 
-    this.recognition.onresult = (event: SpeechRecognitionEvent) => {
+    this.recognition.onresult = (event: any) => {
       let interim = '';
-      let newCommitted = committed;
-
       for (let i = event.resultIndex; i < event.results.length; i++) {
-        const result = event.results[i];
-        if (result.isFinal) {
-          newCommitted += result[0].transcript;
-        } else {
-          interim += result[0].transcript;
-        }
+        const r = event.results[i];
+        if (r.isFinal) committed += r[0].transcript;
+        else interim += r[0].transcript;
       }
-
-      committed = newCommitted;
       const full = committed + interim;
       this.message.set(full);
-      this.interimTranscript.set(interim);
-
       const ta = this.textareaRef()?.nativeElement;
       if (ta) { ta.value = full; this.autoResize(ta); }
     };
 
     this.recognition.onend = () => this.isListening.set(false);
-    this.recognition.onerror = () => { this.isListening.set(false); };
-
+    this.recognition.onerror = () => this.isListening.set(false);
     this.recognition.start();
     this.isListening.set(true);
   }
@@ -118,11 +99,10 @@ export class AiChatInputComponent {
   private stopListening(): void {
     this.recognition?.stop();
     this.isListening.set(false);
-    this.interimTranscript.set('');
   }
 
   private autoResize(ta: HTMLTextAreaElement): void {
     ta.style.height = 'auto';
-    ta.style.height = Math.min(ta.scrollHeight, 140) + 'px';
+    ta.style.height = Math.min(ta.scrollHeight, 200) + 'px';
   }
 }
