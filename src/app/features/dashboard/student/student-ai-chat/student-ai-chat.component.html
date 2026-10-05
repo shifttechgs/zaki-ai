@@ -1,0 +1,27 @@
+<div class="chat-wrap">
+
+  <div class="chat-header">
+    <div class="header-left">
+      <div class="student-avatar">AJ</div>
+      <div class="header-info">
+        <span class="header-title">Your AI Study Assistant</span>
+        <span class="header-sub">GPA 3.7 · 3 assignments due · Term 3</span>
+      </div>
+    </div>
+    <div class="header-badge">
+      <span class="dot"></span>
+      AI Tutor
+    </div>
+  </div>
+
+  <div class="chat-body">
+    @if (showWelcome()) {
+      <app-student-ai-chat-welcome />
+    } @else {
+      <app-ai-chat-messages />
+    }
+  </div>
+
+  <app-ai-chat-input />
+
+</div>

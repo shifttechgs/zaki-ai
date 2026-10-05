@@ -35,6 +35,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'student/ai-chat',
+        loadComponent: () =>
+          import('./features/dashboard/student/student-ai-chat/student-ai-chat.component').then(
+            m => m.StudentAiChatComponent,
+          ),
+      },
+      {
         path: 'parent',
         loadComponent: () =>
           import('./features/dashboard/parent/parent-dashboard.component').then(

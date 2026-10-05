@@ -16,6 +16,7 @@ const STUDENT_NAV: NavItem[] = [
   { label: 'Grades', path: '/dashboard/student', icon: 'bar_chart' },
   { label: 'Schedule', path: '/dashboard/student', icon: 'calendar_today' },
   { label: 'Messages', path: '/dashboard/student', icon: 'chat' },
+  { label: 'Ask AI', path: '/dashboard/student/ai-chat', icon: 'auto_awesome' },
 ];
 
 const PARENT_NAV: NavItem[] = [

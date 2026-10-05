@@ -1,0 +1,24 @@
+<div class="welcome">
+  <div class="content">
+
+    <div class="logo">
+      <mat-icon>auto_awesome</mat-icon>
+    </div>
+
+    <h2 class="heading">What can I help you with?</h2>
+    <p class="sub">I know your grades, schedule, and assignments. Ask me anything.</p>
+
+    <div class="suggestions">
+      @for (s of suggestions; track s.title) {
+        <app-suggestion-card
+          [icon]="s.icon"
+          [title]="s.title"
+          [description]="s.description"
+          [gradient]="s.gradient"
+          (selected)="useSuggestion(s.title)"
+        />
+      }
+    </div>
+
+  </div>
+</div>
