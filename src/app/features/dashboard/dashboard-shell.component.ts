@@ -25,6 +25,7 @@ const PARENT_NAV: NavItem[] = [
   { label: 'Attendance', path: '/dashboard/parent', icon: 'event_available' },
   { label: 'Calendar', path: '/dashboard/parent', icon: 'event' },
   { label: 'Messages', path: '/dashboard/parent', icon: 'chat' },
+  { label: 'Ask AI', path: '/dashboard/parent/ai-chat', icon: 'auto_awesome' },
 ];
 
 @Component({
