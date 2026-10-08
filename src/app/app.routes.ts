@@ -84,6 +84,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'parent/reports',
+        loadComponent: () =>
+          import('./features/dashboard/parent/parent-report/parent-report.component').then(
+            m => m.ParentReportComponent,
+          ),
+      },
+      {
         path: 'parent/ai-chat',
         loadComponent: () =>
           import('./features/dashboard/parent/parent-ai-chat/parent-ai-chat.component').then(

@@ -1,0 +1,179 @@
+<div class="page">
+
+  <!-- Header -->
+  <header class="report-header">
+    <div class="report-title-block">
+      <a class="back-link" [routerLink]="['/dashboard/parent']">
+        <mat-icon>arrow_back</mat-icon>
+      </a>
+      <div>
+        <h1>Alex's Report</h1>
+        <p class="report-sub">Week of Oct 6 – 12, 2026 &nbsp;·&nbsp; Zaki Device Analytics</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="zaki-source">
+        <mat-icon>devices</mat-icon>
+        Sourced from Zaki device
+      </span>
+      <a class="btn-ai" [routerLink]="['/dashboard/parent/ai-chat']">
+        <mat-icon>auto_awesome</mat-icon>Ask Zaki AI
+      </a>
+    </div>
+  </header>
+
+  <!-- Summary stats -->
+  <section class="summary-row">
+    @for (s of summaryStats; track s.label) {
+      <div class="summary-card">
+        <div class="summary-icon icon-{{ s.color }}"><mat-icon>{{ s.icon }}</mat-icon></div>
+        <div class="summary-body">
+          <span class="summary-val">{{ s.value }}</span>
+          <span class="summary-lbl">{{ s.label }}</span>
+        </div>
+      </div>
+    }
+  </section>
+
+  <!-- Performance trend chart -->
+  <div class="card chart-card">
+    <div class="card-head">
+      <h2>Performance Trend</h2>
+      <div class="chart-legend">
+        @for (s of series; track s.name) {
+          <span class="legend-item">
+            <span class="legend-dot" [style.background]="s.color"></span>
+            {{ s.name }}
+          </span>
+        }
+      </div>
+    </div>
+    <div class="chart-wrap">
+      <svg class="chart-svg" viewBox="0 0 580 180" preserveAspectRatio="xMidYMid meet">
+
+        <!-- Grid lines -->
+        @for (g of gridLines; track g.score) {
+          <line [attr.x1]="40" [attr.y1]="g.y" [attr.x2]="540" [attr.y2]="g.y"
+            stroke="#F0F4F8" stroke-width="1"/>
+          <text [attr.x]="34" [attr.y]="g.y + 4" text-anchor="end"
+            fill="#9CAAB6" font-size="10" font-family="inherit">{{ g.score }}</text>
+        }
+
+        <!-- Day labels -->
+        @for (d of days; track d; let i = $index) {
+          <text [attr.x]="dayToX(i)" [attr.y]="172" text-anchor="middle"
+            fill="#9CAAB6" font-size="10" font-family="inherit">{{ d }}</text>
+        }
+
+        <!-- Area fills -->
+        @for (s of series; track s.name) {
+          <path [attr.d]="areaPath(s.scores)" [attr.fill]="s.color" fill-opacity="0.05"/>
+        }
+
+        <!-- Lines -->
+        @for (s of series; track s.name) {
+          <path [attr.d]="linePath(s.scores)" [attr.stroke]="s.color"
+            stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        }
+
+        <!-- Dots -->
+        @for (s of series; track s.name) {
+          @for (score of s.scores; track $index; let i = $index) {
+            <circle [attr.cx]="dayToX(i)" [attr.cy]="scoreToY(score)"
+              r="3.5" [attr.fill]="s.color" stroke="#fff" stroke-width="1.5"/>
+          }
+        }
+
+      </svg>
+    </div>
+  </div>
+
+  <!-- Bottom grid: study time + heatmap -->
+  <div class="bottom-grid">
+
+    <!-- Study time by subject -->
+    <div class="card">
+      <div class="card-head">
+        <h2>Study Time by Subject</h2>
+        <span class="card-badge">This week</span>
+      </div>
+      <div class="study-list">
+        @for (s of studyTime; track s.subject) {
+          <div class="study-row">
+            <span class="study-name">{{ s.subject }}</span>
+            <div class="study-track">
+              <div class="study-bar"
+                [style.width.%]="studyBarWidth(s.minutes)"
+                [style.background]="s.color">
+              </div>
+            </div>
+            <span class="study-val">{{ s.minutes }}m</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Activity heatmap -->
+    <div class="card">
+      <div class="card-head">
+        <h2>Study Activity</h2>
+        <span class="card-badge">Past 5 weeks</span>
+      </div>
+      <div class="heatmap-wrap">
+        <div class="day-labels">
+          @for (d of dayLabels; track $index) {
+            <span>{{ d }}</span>
+          }
+        </div>
+        <div class="heatmap-grid">
+          @for (week of heatmap; track $index; let wi = $index) {
+            <div class="heatmap-week">
+              <span class="week-label">{{ weekLabels[wi] }}</span>
+              <div class="week-cells">
+                @for (minutes of week; track $index) {
+                  <div
+                    class="heat-cell"
+                    [style.background]="heatColor(minutes)"
+                    [title]="minutes + ' min'"
+                  ></div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+        <div class="heatmap-legend">
+          <span>Less</span>
+          <div class="legend-cells">
+            <div class="heat-cell" style="background:#F0F4F8"></div>
+            <div class="heat-cell" style="background:#EDE9FE"></div>
+            <div class="heat-cell" style="background:#C4B5FD"></div>
+            <div class="heat-cell" style="background:#8B5CF6"></div>
+            <div class="heat-cell" style="background:#7C3AED"></div>
+          </div>
+          <span>More</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Achievements -->
+  <div class="card milestones-card">
+    <div class="card-head">
+      <h2>Milestones & Achievements</h2>
+      <span class="card-badge">4 earned this term</span>
+    </div>
+    <div class="milestones-grid">
+      @for (m of milestones; track m.label) {
+        <div class="milestone" [class.locked]="!m.earned">
+          <div class="m-icon" [style.background]="m.bg">
+            <mat-icon [style.color]="m.color">{{ m.icon }}</mat-icon>
+          </div>
+          <span class="m-label">{{ m.label }}</span>
+          <span class="m-date" [class.m-locked-tag]="!m.earned">{{ m.date }}</span>
+        </div>
+      }
+    </div>
+  </div>
+
+</div>

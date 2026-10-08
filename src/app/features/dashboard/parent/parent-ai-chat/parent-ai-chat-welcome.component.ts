@@ -9,17 +9,17 @@ interface Prompt {
 }
 
 const PROMPTS: Prompt[] = [
-  { icon: 'insights',      label: 'How is Alex doing?',         message: 'Give me a full summary of how Alex is doing this term' },
-  { icon: 'flag',          label: 'What needs attention?',      message: 'What does Alex need to work on most right now?' },
-  { icon: 'people',        label: 'Find tutors near me',        message: 'Find me tutors near me for Alex' },
-  { icon: 'collections_bookmark', label: 'Suggest materials',  message: 'Suggest learning materials and resources for Alex' },
+  { icon: 'devices',            label: "What did Alex do today?",       message: "What did Alex do on the Zaki device today?" },
+  { icon: 'flag',               label: 'What needs attention?',         message: 'What does Alex need to work on most right now?' },
+  { icon: 'people',             label: 'Find tutors near me',           message: 'Find me tutors near me for Alex' },
+  { icon: 'collections_bookmark', label: 'Suggest learning materials', message: 'Suggest learning materials and resources for Alex' },
 ];
 
 const CHILD_STATS = [
-  { label: 'GPA',        value: '3.7' },
-  { label: 'Attendance', value: '94%' },
-  { label: 'Class Rank', value: '#36' },
-  { label: 'Missing',    value: '0'   },
+  { label: 'GPA',        value: '3.7'    },
+  { label: 'Attendance', value: '94%'    },
+  { label: 'Today',      value: '1h 42m' },
+  { label: 'Streak',     value: '7 days' },
 ];
 
 @Component({

@@ -128,6 +128,21 @@ export class ParentAiChatService {
   private buildResponse(prompt: string): string {
     const q = prompt.toLowerCase();
 
+    // Device / today's activity
+    if (q.match(/today|device|zaki.*do|did.*alex|session|activity|what.*on/)) {
+      return (
+        `**Alex's Zaki Device Activity — Today**\n\n` +
+        `Total session: **1h 42m** · 3 quizzes · 2 games\n\n` +
+        `**Timeline:**\n` +
+        `• **3:42 PM** — Algebra Quiz · 8/10 correct · 12 min\n` +
+        `• **3:12 PM** — Maths Word Game · Level 7 reached · 18 min\n` +
+        `• **2:30 PM** — Biology: Cell Division · Chapter 4 completed · 22 min\n` +
+        `• **2:05 PM** — History Quiz · 9/10 correct · 8 min\n` +
+        `• **1:45 PM** — Device connected · Session started\n\n` +
+        `**Summary:** Strong day. History and algebra scores were excellent. Biology is the area to watch — it was a passive reading session with no quiz, which limits retention. Suggesting a short quiz on cell division tonight would reinforce the content.`
+      );
+    }
+
     // Performance / grades / academic overview
     if (q.match(/perform|gpa|grade|subject|result|academ/)) {
       return (

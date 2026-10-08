@@ -1,27 +1,41 @@
 <div class="page">
 
-  <!-- Hero -->
+  <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
   <header class="hero">
-    <div class="hero-profile">
+    <div class="hero-left">
       <div class="hero-avatar">AJ</div>
       <div class="hero-info">
-        <h1>Alex Johnson</h1>
-        <p>Grade 10 &nbsp;·&nbsp; St. Mary's High School &nbsp;·&nbsp; Term 3, 2026</p>
+        <div class="hero-name-row">
+          <h1>Alex Johnson</h1>
+          <span class="device-pill">
+            <span class="device-dot"></span>
+            Zaki Device · Online
+          </span>
+        </div>
+        <p class="hero-sub">Grade 10 &nbsp;·&nbsp; St. Mary's High School &nbsp;·&nbsp; Term 3, 2026</p>
+        <div class="hero-tags">
+          <span class="hero-tag tag-fire"><mat-icon>local_fire_department</mat-icon>7-day streak</span>
+          <span class="hero-tag tag-time"><mat-icon>schedule</mat-icon>1h 42m today</span>
+          <span class="hero-tag tag-quiz"><mat-icon>quiz</mat-icon>3 quizzes</span>
+          <span class="hero-tag tag-rank"><mat-icon>workspace_premium</mat-icon>Rank #36</span>
+        </div>
       </div>
     </div>
-    <a class="btn-ai" [routerLink]="['/dashboard/parent/ai-chat']">
-      <mat-icon>auto_awesome</mat-icon>
-      Ask Zaki AI
-    </a>
+    <div class="hero-actions">
+      <a class="btn-report" [routerLink]="['/dashboard/parent/reports']">
+        <mat-icon>bar_chart</mat-icon>View Report
+      </a>
+      <a class="btn-ai" [routerLink]="['/dashboard/parent/ai-chat']">
+        <mat-icon>auto_awesome</mat-icon>Ask Zaki AI
+      </a>
+    </div>
   </header>
 
-  <!-- Stats -->
-  <section class="stats-row" aria-label="Key stats">
+  <!-- ── Stats ─────────────────────────────────────────────────────────────── -->
+  <section class="stats-row">
     @for (stat of stats; track stat.label) {
       <div class="stat-card">
-        <div class="stat-icon icon-{{ stat.color }}">
-          <mat-icon>{{ stat.icon }}</mat-icon>
-        </div>
+        <div class="stat-icon icon-{{ stat.color }}"><mat-icon>{{ stat.icon }}</mat-icon></div>
         <div class="stat-body">
           <span class="stat-val">{{ stat.value }}</span>
           <span class="stat-lbl">{{ stat.label }}</span>
@@ -31,28 +45,105 @@
     }
   </section>
 
-  <!-- Content grid -->
-  <div class="content-grid">
+  <!-- ── Main grid ─────────────────────────────────────────────────────────── -->
+  <div class="main-grid">
 
-    <!-- Main column -->
-    <div class="col-main">
+    <!-- Left column -->
+    <div class="col-left">
 
-<!-- Focus this week -->
-      <div class="card card-focus">
+      <!-- Subject Mastery Rings -->
+      <div class="card">
         <div class="card-head">
-          <h2>Where to focus this week</h2>
-          <span class="focus-count">2 priority areas</span>
+          <h2>Subject Mastery</h2>
+          <span class="card-badge">Term 3 · 2026</span>
+        </div>
+        <div class="rings-row">
+          @for (m of mastery; track m.subject) {
+            <div class="ring-item">
+              <div class="ring-wrap">
+                <svg class="ring-svg" viewBox="0 0 88 88" aria-hidden="true">
+                  <circle cx="44" cy="44" r="36" fill="none" [attr.stroke]="m.track" stroke-width="7"/>
+                  <circle
+                    cx="44" cy="44" r="36" fill="none"
+                    [attr.stroke]="m.color"
+                    stroke-width="7"
+                    stroke-linecap="round"
+                    [attr.stroke-dasharray]="RING_C"
+                    [attr.stroke-dashoffset]="ringOffset(m.score)"
+                    transform="rotate(-90 44 44)"
+                    class="ring-arc"
+                  />
+                </svg>
+                <div class="ring-center">
+                  <span class="ring-score">{{ m.score }}</span>
+                  <span class="ring-grade" [style.color]="m.color">{{ m.grade }}</span>
+                </div>
+              </div>
+              <span class="ring-label">{{ m.subject }}</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Today on Zaki -->
+      <div class="card">
+        <div class="card-head">
+          <h2>Today on Zaki</h2>
+          <span class="live-pill"><span class="live-dot"></span>Live</span>
+        </div>
+        <div class="activity-feed">
+          @for (a of todayActivity; track a.time) {
+            <div class="activity-row">
+              <span class="act-time">{{ a.time }}</span>
+              <div class="act-icon icon-{{ a.color }}"><mat-icon>{{ a.icon }}</mat-icon></div>
+              <div class="act-body">
+                <span class="act-text">{{ a.text }}</span>
+                <span class="act-detail">{{ a.detail }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right column -->
+    <div class="col-right">
+
+      <!-- AI Insight -->
+      <div class="card card-insight">
+        <div class="card-head">
+          <h2 class="h2-flex">
+            <span class="insight-icon-wrap"><mat-icon>auto_awesome</mat-icon></span>
+            Zaki AI Insight
+          </h2>
+          <span class="confidence-chip">{{ aiInsight.confidence }}% confident</span>
+        </div>
+        <div class="insight-body">
+          <p class="insight-sessions">Analysed <strong>{{ aiInsight.sessions }} sessions</strong> this month</p>
+          <p class="insight-finding">{{ aiInsight.finding }}</p>
+          <p class="insight-detail">{{ aiInsight.detail }}</p>
+          <a class="insight-cta" [routerLink]="['/dashboard/parent/ai-chat']">
+            Ask Zaki for recommendations
+            <mat-icon>arrow_forward</mat-icon>
+          </a>
+        </div>
+      </div>
+
+      <!-- Focus This Week -->
+      <div class="card">
+        <div class="card-head">
+          <h2>Where to focus</h2>
+          <span class="card-badge">2 areas</span>
         </div>
         <div class="focus-list">
           @for (f of focusAreas; track f.id) {
             <div class="focus-item focus-{{ f.color }}">
               <div class="focus-top">
-                <div class="focus-icon icon-{{ f.color }}">
-                  <mat-icon>{{ f.icon }}</mat-icon>
-                </div>
-                <div class="focus-heading">
+                <div class="focus-icon icon-{{ f.color }}"><mat-icon>{{ f.icon }}</mat-icon></div>
+                <div>
                   <span class="focus-title">{{ f.title }}</span>
-                  <span class="focus-subject-tag">{{ f.subject }}</span>
+                  <span class="focus-tag">{{ f.subject }}</span>
                 </div>
               </div>
               @if (f.quote) {
@@ -61,29 +152,31 @@
               }
               <p class="focus-detail">{{ f.detail }}</p>
               <a class="focus-link" [routerLink]="['/dashboard/parent/ai-chat']">
-                Get help from Zaki
-                <mat-icon>arrow_forward</mat-icon>
+                Get help <mat-icon>arrow_forward</mat-icon>
               </a>
             </div>
           }
         </div>
       </div>
 
-
-    </div>
-
-    <!-- Right sidebar -->
-    <div class="col-right">
-
-<!-- AI CTA -->
-      <div class="card card-cta">
-        <div class="cta-icon"><mat-icon>auto_awesome</mat-icon></div>
-        <p class="cta-title">Need tutors or materials?</p>
-        <p class="cta-sub">Ask Zaki AI to find tutors near you or suggest learning resources for Alex.</p>
-        <a class="cta-btn" [routerLink]="['/dashboard/parent/ai-chat']">Open Zaki AI</a>
+      <!-- Achievements -->
+      <div class="card">
+        <div class="card-head">
+          <h2>Achievements</h2>
+          <span class="card-badge">3 earned</span>
+        </div>
+        <div class="achievements-grid">
+          @for (a of achievements; track a.label) {
+            <div class="achievement" [class.locked]="!a.earned">
+              <div class="ach-icon" [style.background]="a.bg">
+                <mat-icon [style.color]="a.color">{{ a.icon }}</mat-icon>
+              </div>
+              <span class="ach-label">{{ a.label }}</span>
+            </div>
+          }
+        </div>
       </div>
 
     </div>
-
   </div>
 </div>
