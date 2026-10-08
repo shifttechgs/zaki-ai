@@ -1,14 +1,21 @@
 <div class="page">
 
-  <!-- Page header -->
-  <header class="page-head">
-    <div>
-      <h1>Parent Overview</h1>
-      <p>Monitoring Alex Johnson &middot; Grade 10 &middot; St. Mary's High School</p>
+  <!-- ── Page hero ─────────────────────────────────────────────────────────── -->
+  <header class="hero">
+    <div class="hero-profile">
+      <div class="hero-avatar">AJ</div>
+      <div class="hero-info">
+        <h1>Alex Johnson</h1>
+        <p>Grade 10 &nbsp;·&nbsp; St. Mary's High School &nbsp;·&nbsp; Term 3, 2026</p>
+      </div>
     </div>
+    <a class="btn-ai" [routerLink]="['/dashboard/parent/ai-chat']">
+      <mat-icon>auto_awesome</mat-icon>
+      Ask AI Assistant
+    </a>
   </header>
 
-  <!-- Stats row -->
+  <!-- ── Stats row ─────────────────────────────────────────────────────────── -->
   <section class="stats-row" aria-label="Key stats">
     @for (stat of stats; track stat.label) {
       <div class="stat-card">
@@ -24,38 +31,246 @@
     }
   </section>
 
-  <!-- Content grid -->
+  <!-- ── Content grid ───────────────────────────────────────────────────────── -->
   <div class="content-grid">
 
-    <!-- Activity feed -->
-    <div>
+    <!-- ── Main column ─────────────────────────────────────────────────────── -->
+    <div class="col-main">
+
+      <!-- Subject Performance -->
       <div class="card">
         <div class="card-head">
-          <h2>Recent Activity</h2>
+          <h2>Subject Performance</h2>
+          <span class="card-badge">Term 3 · 2026</span>
         </div>
-        <div class="feed">
-          @for (item of activity; track item.id) {
-            <div class="feed-item">
-              <div class="feed-icon feed-{{ item.type }}">
-                <mat-icon>{{ item.icon }}</mat-icon>
+        <div class="subjects-list">
+          @for (subj of subjects; track subj.name) {
+            <div class="subject-row">
+              <div class="subject-meta">
+                <span class="subject-name">{{ subj.name }}</span>
+                <span class="subject-teacher">{{ subj.teacher }}</span>
               </div>
-              <div class="feed-body">
-                <p class="feed-text">{{ item.text }}</p>
-                <span class="feed-time">{{ item.time }}</span>
+              <div class="subject-bar-track">
+                <div
+                  class="subject-bar bar-{{ subj.color }}"
+                  [style.width.%]="subj.score">
+                </div>
+              </div>
+              <div class="subject-right">
+                <span class="subject-score">{{ subj.score }}<span class="score-denom">/100</span></span>
+                <span class="grade-chip grade-{{ subj.color }}">{{ subj.grade }}</span>
+                <span class="trend trend-{{ subj.trend }}">
+                  <mat-icon>
+                    @if (subj.trend === 'up') { trending_up }
+                    @else if (subj.trend === 'down') { trending_down }
+                    @else { trending_flat }
+                  </mat-icon>
+                </span>
               </div>
             </div>
           }
         </div>
       </div>
-    </div>
 
-    <!-- Right column -->
-    <div class="col-right">
+      <!-- Strengths & Weaknesses -->
+      <div class="sw-grid">
 
-      <!-- School events -->
+        <!-- Strengths -->
+        <div class="card card-strengths">
+          <div class="card-head">
+            <h2 class="h2-icon">
+              <span class="head-icon-wrap green-icon"><mat-icon>stars</mat-icon></span>
+              Strengths
+            </h2>
+          </div>
+          <ul class="sw-list">
+            @for (s of strengths; track s.area) {
+              <li class="sw-item">
+                <div class="sw-dot dot-green">
+                  <mat-icon>{{ s.icon }}</mat-icon>
+                </div>
+                <div class="sw-body">
+                  <span class="sw-area">{{ s.area }}</span>
+                  <span class="sw-detail">{{ s.detail }}</span>
+                </div>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <!-- Weaknesses -->
+        <div class="card card-weaknesses">
+          <div class="card-head">
+            <h2 class="h2-icon">
+              <span class="head-icon-wrap amber-icon"><mat-icon>flag</mat-icon></span>
+              Areas to Improve
+            </h2>
+          </div>
+          <ul class="sw-list">
+            @for (w of weaknesses; track w.area) {
+              <li class="sw-item">
+                <div class="sw-dot dot-{{ w.urgency }}">
+                  <mat-icon>{{ w.icon }}</mat-icon>
+                </div>
+                <div class="sw-body">
+                  <div class="sw-area-row">
+                    <span class="sw-area">{{ w.area }}</span>
+                    <span class="urgency-pill pill-{{ w.urgency }}">{{ w.urgency }}</span>
+                  </div>
+                  <span class="sw-detail">{{ w.detail }}</span>
+                </div>
+              </li>
+            }
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- AI Action Plan -->
+      <div class="card card-ai">
+        <div class="card-head">
+          <h2 class="h2-icon">
+            <span class="head-icon-wrap ai-icon"><mat-icon>auto_awesome</mat-icon></span>
+            What Alex Needs
+          </h2>
+          <span class="ai-badge">AI Action Plan</span>
+        </div>
+        <div class="suggestions-list">
+          @for (s of suggestions; track s.id) {
+            <div class="suggestion-item">
+              <div class="suggestion-num priority-{{ s.priority }}">
+                <mat-icon>{{ s.icon }}</mat-icon>
+              </div>
+              <div class="suggestion-body">
+                <div class="suggestion-head">
+                  <span class="suggestion-title">{{ s.title }}</span>
+                  <span class="suggestion-subject-tag">{{ s.subject }}</span>
+                  <span class="priority-chip chip-{{ s.priority }}">{{ s.priority }}</span>
+                </div>
+                <p class="suggestion-detail">{{ s.detail }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Teacher Comments -->
       <div class="card">
         <div class="card-head">
-          <h2>School Events</h2>
+          <h2>Teacher Comments</h2>
+          <span class="card-badge">3 recent</span>
+        </div>
+        <div class="comments-list">
+          @for (c of teacherComments; track c.id) {
+            <div class="comment-item">
+              <div class="comment-avatar avatar-{{ c.sentiment }}">{{ c.avatar }}</div>
+              <div class="comment-body">
+                <div class="comment-meta">
+                  <span class="comment-from">{{ c.teacher }}</span>
+                  <span class="comment-sep">·</span>
+                  <span class="comment-subject">{{ c.subject }}</span>
+                  <span class="comment-date">{{ c.date }}</span>
+                </div>
+                <p class="comment-text">"{{ c.comment }}"</p>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Resources: Materials + Tutors -->
+      <div class="resources-grid">
+
+        <!-- Suggested Materials -->
+        <div class="card">
+          <div class="card-head">
+            <h2 class="h2-icon">
+              <span class="head-icon-wrap blue-icon"><mat-icon>collections_bookmark</mat-icon></span>
+              Suggested Materials
+            </h2>
+          </div>
+          <ul class="material-list">
+            @for (m of materials; track m.id) {
+              <li class="material-item">
+                <div class="material-icon">
+                  <mat-icon>{{ m.icon }}</mat-icon>
+                </div>
+                <div class="material-body">
+                  <div class="material-top">
+                    <span class="material-title">{{ m.title }}</span>
+                    <span class="material-tag tag-{{ m.tagColor }}">{{ m.tag }}</span>
+                  </div>
+                  <span class="material-type">{{ m.type }}</span>
+                  <p class="material-detail">{{ m.detail }}</p>
+                </div>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <!-- Tutors Near You -->
+        <div class="card">
+          <div class="card-head">
+            <h2 class="h2-icon">
+              <span class="head-icon-wrap purple-icon"><mat-icon>people</mat-icon></span>
+              Tutors Near You
+            </h2>
+            <span class="card-badge">Zaki can connect you</span>
+          </div>
+          <ul class="tutor-list">
+            @for (t of tutors; track t.id) {
+              <li class="tutor-item">
+                <div class="tutor-top">
+                  <div class="tutor-avatar" [style.background]="t.avatarBg" [style.color]="t.avatarColor">
+                    {{ t.initials }}
+                  </div>
+                  <div class="tutor-info">
+                    <span class="tutor-name">{{ t.name }}</span>
+                    <span class="tutor-subjects">{{ t.subjects }}</span>
+                  </div>
+                  <span class="tutor-badge badge-{{ t.badgeColor }}">{{ t.badge }}</span>
+                </div>
+                <div class="tutor-stats">
+                  <span class="tutor-rating">
+                    <mat-icon>star</mat-icon>
+                    {{ t.rating }} <span class="review-count">({{ t.reviews }})</span>
+                  </span>
+                  <span class="tutor-rate">{{ t.rate }}</span>
+                </div>
+                <div class="tutor-details">
+                  <span class="tutor-chip">
+                    <mat-icon>place</mat-icon>{{ t.distance }}
+                  </span>
+                  <span class="tutor-chip">
+                    <mat-icon>schedule</mat-icon>{{ t.availability }}
+                  </span>
+                </div>
+                <button class="btn-connect">Connect via Zaki</button>
+              </li>
+            }
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Right sidebar ──────────────────────────────────────────────────── -->
+    <div class="col-right">
+
+      <!-- AI Chat CTA -->
+      <div class="card card-chat-cta">
+        <div class="chat-cta-icon">
+          <mat-icon>auto_awesome</mat-icon>
+        </div>
+        <p class="chat-cta-title">Talk to Zaki AI</p>
+        <p class="chat-cta-sub">Ask about Alex's progress, get recommendations, or dig into any subject.</p>
+        <a class="btn-chat-full" [routerLink]="['/dashboard/parent/ai-chat']">Open AI Chat</a>
+      </div>
+
+      <!-- School Events -->
+      <div class="card">
+        <div class="card-head">
+          <h2>Upcoming Events</h2>
         </div>
         <ul class="event-list" aria-label="Upcoming school events">
           @for (event of events; track event.id) {
@@ -70,10 +285,11 @@
         </ul>
       </div>
 
-      <!-- Teacher messages -->
+      <!-- Teacher Messages -->
       <div class="card">
         <div class="card-head">
           <h2>Teacher Messages</h2>
+          <span class="card-badge">2 unread</span>
         </div>
         <ul class="msg-list" aria-label="Teacher messages">
           @for (msg of messages; track msg.id) {
@@ -92,5 +308,4 @@
     </div>
 
   </div>
-
 </div>

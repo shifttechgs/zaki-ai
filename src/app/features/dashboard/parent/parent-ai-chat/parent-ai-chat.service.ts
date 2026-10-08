@@ -11,13 +11,17 @@ const CHILD = {
   absences: 2,
   rank: 'Top 20%',
   rankOf: 180,
+  classRank: 36,
   missingWork: 0,
   subjects: [
-    { name: 'Mathematics', grade: 'A', score: 88, teacher: 'Mr. Thompson' },
-    { name: 'English', grade: 'B+', score: 76, teacher: 'Mrs. Davis' },
-    { name: 'Physics', grade: 'A', score: 92, teacher: 'Dr. Patel' },
-    { name: 'History', grade: 'A+', score: 95, teacher: 'Ms. Garcia' },
+    { name: 'History',     grade: 'A+', score: 95, teacher: 'Ms. Garcia',   trend: 'up' },
+    { name: 'Physics',     grade: 'A',  score: 92, teacher: 'Dr. Patel',    trend: 'up' },
+    { name: 'Mathematics', grade: 'A',  score: 88, teacher: 'Mr. Thompson', trend: 'up' },
+    { name: 'English',     grade: 'B+', score: 76, teacher: 'Mrs. Davis',   trend: 'stable' },
+    { name: 'Biology',     grade: 'B',  score: 74, teacher: 'Mr. Chen',     trend: 'down' },
   ],
+  strengths: ['Analytical Thinking', 'Historical Analysis', 'Lab Work & Science', 'Reliability'],
+  weaknesses: ['Essay structure (English)', 'Biology — cellular concepts', 'Deadline management'],
   upcomingEvents: [
     { title: 'Parent-Teacher Conference', date: '15 Nov 2026' },
     { title: 'Science Fair', date: '20 Nov 2026' },
@@ -67,13 +71,8 @@ export class ParentAiChatService {
     return groups;
   });
 
-  selectConversation(id: string): void {
-    this._activeId.set(id);
-  }
-
-  startNewConversation(): void {
-    this._activeId.set(null);
-  }
+  selectConversation(id: string): void { this._activeId.set(id); }
+  startNewConversation(): void { this._activeId.set(null); }
 
   deleteConversation(id: string): void {
     this._conversations.update(cs => cs.filter(c => c.id !== id));
@@ -129,60 +128,139 @@ export class ParentAiChatService {
   private buildResponse(prompt: string): string {
     const q = prompt.toLowerCase();
 
+    // Performance / grades / academic overview
     if (q.match(/perform|gpa|grade|subject|result|academ/)) {
       return (
         `**${CHILD.name}'s Academic Performance — Term 3**\n\n` +
-        `Overall GPA is **${CHILD.gpa}**, placing ${CHILD.name} in the **${CHILD.rank}** of ${CHILD.rankOf} students at ${CHILD.school}.\n\n` +
+        `Overall GPA is **${CHILD.gpa}**, ranking ${CHILD.name} **#${CHILD.classRank} out of ${CHILD.rankOf} students** at ${CHILD.school}.\n\n` +
         `**Subject breakdown:**\n` +
         CHILD.subjects.map(s => `• **${s.name}** — ${s.grade} (${s.score}/100) · ${s.teacher}`).join('\n') +
-        `\n\nStrong performance in History and Physics. English is the area most worth watching — the B+ on the essay draft suggests there's room to improve written structure. I'd recommend asking Mrs. Davis for specific feedback if you haven't already.`
+        `\n\nStrong performances in History (95) and Physics (92). English (76) and Biology (74) are the areas most worth watching this term.`
       );
     }
 
+    // Attendance
     if (q.match(/attend|absent|absence|miss.*school|school.*miss/)) {
       return (
         `**Attendance Summary — Term 3**\n\n` +
-        `${CHILD.name}'s attendance rate is **${CHILD.attendance}%** this term, with **${CHILD.absences} absences** recorded.\n\n` +
-        `Both absences were in the first half of term. Since then, ${CHILD.name} has had a perfect attendance streak. There is currently **no missing work** — all assignments are up to date.\n\n` +
-        `This is within the school's acceptable range and well above the 85% minimum threshold. No action needed at this stage.`
+        `${CHILD.name}'s attendance rate is **${CHILD.attendance}%** with **${CHILD.absences} absences** recorded.\n\n` +
+        `Both absences occurred early in the term. Since then ${CHILD.name} has had a perfect streak. All assignments are up to date — **${CHILD.missingWork} missing work** items.\n\n` +
+        `This is well above the school's 85% minimum threshold. No action needed at this stage.`
       );
     }
 
+    // Strengths
+    if (q.match(/strength|good at|excel|best|top|talent|gifted/)) {
+      return (
+        `**${CHILD.name}'s Strengths**\n\n` +
+        `Here is where ${CHILD.name} clearly stands out this term:\n\n` +
+        `• **Analytical Thinking** — Problem-solving in Physics and Mathematics is consistently above average\n` +
+        `• **Historical Analysis** — Top of class, A+ every assessment. Ms. Garcia has recommended the Regional History Essay Competition\n` +
+        `• **Lab Work & Science** — Dr. Patel notes exceptional experimental accuracy and genuine curiosity in Physics\n` +
+        `• **Reliability** — Perfect attendance for 6 consecutive weeks; all work submitted on time recently\n\n` +
+        `${CHILD.name} has a strong analytical mind. The Science Olympiad opportunity is one worth exploring — Dr. Patel personally recommended it.`
+      );
+    }
+
+    // Weaknesses
+    if (q.match(/weak|struggle|concern|worry|problem|issue|trouble|need.*work|improv/)) {
+      return (
+        `**Areas to Improve — ${CHILD.name}**\n\n` +
+        `These are the priority areas to address this term:\n\n` +
+        `• **Essay Structure** *(medium priority)* — English is sitting at 76/100. Mrs. Davis highlighted that argument flow and paragraph cohesion are the main gaps. This is ${CHILD.name}'s lowest score relative to the standard set in other subjects.\n` +
+        `• **Biology** *(medium priority)* — A recent dip to 74/100 suggests a gap in cellular biology concepts. This is worth addressing before it compounds.\n` +
+        `• **Deadline Management** *(low priority)* — Two late submissions in Q1, though there has been no recurrence since. Worth monitoring, not urgent.\n\n` +
+        `Overall there is nothing alarming — ${CHILD.name} is still in the top 20% of the year. These are refinement areas, not rescue scenarios.`
+      );
+    }
+
+    // What Alex needs / action plan / suggestions
+    if (q.match(/need|suggest|action|plan|help.*alex|recommend|what.*do|advice|next step/)) {
+      return (
+        `**Action Plan for ${CHILD.name}**\n\n` +
+        `Based on current performance, here is what I recommend focusing on:\n\n` +
+        `**🔴 High Priority**\n` +
+        `• **Strengthen Essay Writing** — 2–3 short practice essays per week on argument structure and paragraph cohesion. Ask Mrs. Davis for a self-assessment rubric.\n` +
+        `• **Review Biology Fundamentals** — 30 min/day on Khan Academy's Cell Biology unit. Should close the gap within 2–3 weeks.\n\n` +
+        `**🟡 Medium Priority**\n` +
+        `• **Chapter 8 Math Test** — Algebra proofs test is next Friday. Practice 5 problems nightly this week to hold the current A.\n\n` +
+        `**✨ Opportunity**\n` +
+        `• **Science Olympiad** — Dr. Patel nominated ${CHILD.name} as a strong candidate. Excellent for advanced learning and college applications.\n\n` +
+        `Would you like me to suggest specific tutors or materials for any of these?`
+      );
+    }
+
+    // Materials / resources
+    if (q.match(/material|resource|book|course|video|tool|grammarly|khan|online|learn/)) {
+      return (
+        `**Suggested Learning Materials for ${CHILD.name}**\n\n` +
+        `Here are the resources I recommend based on the current gaps:\n\n` +
+        `**For English (Essay Writing)**\n` +
+        `• *The Elements of Style* by Strunk & White — concise, practical, directly addresses structure issues\n` +
+        `• **Grammarly Premium** — real-time AI feedback that trains good writing habits over time\n\n` +
+        `**For Biology**\n` +
+        `• **Khan Academy — Biology** *(Free)* — Cell Biology and Genetics units, self-paced with instant feedback quizzes\n\n` +
+        `**For History (enrichment)**\n` +
+        `• **Crash Course History** on YouTube — engaging, well-structured AP-level review series\n\n` +
+        `All of these can be started immediately. Would you like me to help connect ${CHILD.name} with a tutor instead?`
+      );
+    }
+
+    // Tutors
+    if (q.match(/tutor|coach|teacher|private.*lesson|lesson|help.*find/)) {
+      return (
+        `**Tutors Near You — for ${CHILD.name}**\n\n` +
+        `Based on the priority subjects, here are three highly-rated tutors I recommend:\n\n` +
+        `**Sarah Mitchell** — English & Writing · ★ 4.9 (42 reviews)\n` +
+        `$45/hr · 1.2 mi away · Mon, Wed, Fri\n` +
+        `*Directly addresses the essay structure gap Mrs. Davis flagged.*\n\n` +
+        `**James Okafor** — Biology & Chemistry · ★ 4.8 (28 reviews)\n` +
+        `$40/hr · 2.4 mi away · Tue, Thu, Sat · Also available online\n` +
+        `*Specialises in exactly the cellular biology area where ${CHILD.name} dipped.*\n\n` +
+        `**Priya Nair** — Mathematics & Physics · ★ 4.7 (65 reviews)\n` +
+        `$50/hr · 0.8 mi away · Flexible hours\n` +
+        `*Closest to you — great for keeping the current A in Math.*\n\n` +
+        `Would you like Zaki to help you book a session with any of them?`
+      );
+    }
+
+    // Upcoming / events / schedule
     if (q.match(/upcom|event|next|schedule|week|soon|calendar/)) {
       return (
         `**Upcoming for ${CHILD.name}**\n\n` +
         CHILD.upcomingEvents.map(e => `• **${e.title}** — ${e.date}`).join('\n') +
-        `\n\nThe Parent-Teacher Conference on 15 Nov is the most important near-term date — it's a good opportunity to discuss the English essay progress directly with Mrs. Davis. I'd suggest noting a few questions beforehand.`
+        `\n\n**Key note:** The Parent-Teacher Conference on 15 Nov is the most important near-term date. This is your opportunity to discuss the English essay progress directly with Mrs. Davis. I'd suggest preparing a few specific questions beforehand — particularly around the writing rubric and what excellent looks like in her marking.\n\n` +
+        `The Science Fair on 20 Nov is also relevant — ${CHILD.name} may wish to enter given the Physics strengths Dr. Patel has highlighted.`
       );
     }
 
-    if (q.match(/summar|overview|how.*doing|overall|report|this term/)) {
+    // Summary / overview
+    if (q.match(/summar|overview|how.*doing|overall|report|this term|snapshot/)) {
       return (
         `**Term 3 Summary — ${CHILD.name}**\n\n` +
-        `**GPA:** ${CHILD.gpa} · **Rank:** ${CHILD.rank} of ${CHILD.rankOf} students\n` +
+        `**GPA:** ${CHILD.gpa} · **Rank:** #${CHILD.classRank} of ${CHILD.rankOf} students\n` +
         `**Attendance:** ${CHILD.attendance}% · ${CHILD.absences} absences · 0 missing assignments\n\n` +
-        `${CHILD.name} is performing well across the board. History (A+) and Physics (A) are stand-out subjects. English (B+) is the one area to monitor — still a solid grade but below the standard set in other subjects.\n\n` +
-        `There are no attendance or behavioural concerns. The next key milestone is the Parent-Teacher Conference on 15 Nov 2026.`
-      );
-    }
-
-    if (q.match(/concern|worry|problem|issue|trouble|struggle/)) {
-      return (
-        `**Areas to Watch for ${CHILD.name}**\n\n` +
-        `Overall, there's nothing urgent to flag. A few things worth keeping an eye on:\n\n` +
-        `• **English (B+)** — slightly below ${CHILD.name}'s performance in other subjects. The essay draft scored 76/100. Following up with Mrs. Davis at the upcoming conference would be worthwhile.\n` +
-        `• **Attendance** — two absences this term, both early on. The streak since has been perfect, so this is minor.\n\n` +
-        `No missing work, no disciplinary notes, and the GPA is strong at ${CHILD.gpa}. These are areas to monitor, not causes for concern right now.`
+        `**Top subjects:** History (A+ · 95), Physics (A · 92), Mathematics (A · 88)\n` +
+        `**Watch areas:** English (B+ · 76), Biology (B · 74)\n\n` +
+        `${CHILD.name} is performing well — no attendance or behavioural concerns. The two areas to address are essay writing in English and a recent dip in Biology. Both are very manageable with targeted support.\n\n` +
+        `Next milestone: **Parent-Teacher Conference on 15 Nov 2026**.\n\n` +
+        `*Ask me about strengths, weaknesses, tutor recommendations, or learning materials for more detail.*`
       );
     }
 
     return (
-      `I'm your AI assistant for tracking ${CHILD.name}'s school progress at ${CHILD.school}.\n\n` +
-      `Here's a quick snapshot:\n` +
-      `• **GPA:** ${CHILD.gpa} (${CHILD.rank} of ${CHILD.rankOf} students)\n` +
+      `I'm Zaki, your AI companion for tracking ${CHILD.name}'s progress at ${CHILD.school}.\n\n` +
+      `**Quick snapshot:**\n` +
+      `• **GPA:** ${CHILD.gpa} · #${CHILD.classRank} of ${CHILD.rankOf} students\n` +
       `• **Attendance:** ${CHILD.attendance}% · ${CHILD.absences} absences\n` +
       `• **Missing work:** ${CHILD.missingWork}\n\n` +
-      `You can ask me things like "How is Alex performing this term?", "Any concerns I should know about?", or "What's coming up this week?"`
+      `**Things you can ask me:**\n` +
+      `• "How is Alex performing this term?"\n` +
+      `• "What are Alex's strengths and weaknesses?"\n` +
+      `• "What does Alex need to improve?"\n` +
+      `• "Suggest some learning materials"\n` +
+      `• "Find me tutors near me"\n` +
+      `• "Any concerns I should know about?"`
     );
   }
 }
