@@ -43,14 +43,12 @@
     <!-- Navigation -->
     <nav class="nav" aria-label="Main navigation">
 
-      @for (item of navItems(); track item.label; let first = $first) {
-        @if (first && item.ai) {
-          <span class="nav-section-label">AI Overview</span>
-        } @else if (!first && item.ai) {
+      <span class="nav-section-label">Navigate</span>
+
+      @for (item of navItems(); track item.label) {
+        @if (item.ai) {
           <div class="nav-divider"></div>
           <span class="nav-section-label">AI Assistant</span>
-        } @else if (first) {
-          <span class="nav-section-label">Navigate</span>
         }
         <a
           class="nav-link"
