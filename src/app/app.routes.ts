@@ -51,37 +51,34 @@ export const routes: Routes = [
       {
         path: 'parent/children',
         loadComponent: () =>
-          import('./features/dashboard/parent/parent-dashboard.component').then(
-            m => m.ParentDashboardComponent,
+          import('./features/dashboard/parent/parent-placeholder.component').then(
+            m => m.ParentPlaceholderComponent,
           ),
+        data: { feature: 'My Children', icon: 'people', description: 'Manage all your children\'s Zaki profiles and switch between their dashboards in one place.' },
       },
       {
         path: 'parent/grades',
         loadComponent: () =>
-          import('./features/dashboard/parent/parent-dashboard.component').then(
-            m => m.ParentDashboardComponent,
+          import('./features/dashboard/parent/parent-placeholder.component').then(
+            m => m.ParentPlaceholderComponent,
           ),
+        data: { feature: 'Grades', icon: 'bar_chart', description: 'Detailed grade breakdowns per subject, assignment and term — with trend analysis over time.' },
       },
       {
         path: 'parent/attendance',
         loadComponent: () =>
-          import('./features/dashboard/parent/parent-dashboard.component').then(
-            m => m.ParentDashboardComponent,
+          import('./features/dashboard/parent/parent-placeholder.component').then(
+            m => m.ParentPlaceholderComponent,
           ),
-      },
-      {
-        path: 'parent/calendar',
-        loadComponent: () =>
-          import('./features/dashboard/parent/parent-dashboard.component').then(
-            m => m.ParentDashboardComponent,
-          ),
+        data: { feature: 'Attendance', icon: 'event_available', description: 'Full attendance history, absence notes and punctuality records synced from school.' },
       },
       {
         path: 'parent/messages',
         loadComponent: () =>
-          import('./features/dashboard/parent/parent-dashboard.component').then(
-            m => m.ParentDashboardComponent,
+          import('./features/dashboard/parent/parent-placeholder.component').then(
+            m => m.ParentPlaceholderComponent,
           ),
+        data: { feature: 'Messages', icon: 'chat', description: 'Direct messaging with teachers and school staff — all in one organised inbox.' },
       },
       {
         path: 'parent/reports',
