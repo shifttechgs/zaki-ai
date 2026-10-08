@@ -1,12 +1,11 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { LowerCasePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-parent-dashboard',
   standalone: true,
-  imports: [LowerCasePipe, MatIconModule, RouterLink],
+  imports: [MatIconModule, RouterLink],
   templateUrl: './parent-dashboard.component.html',
   styleUrl: './parent-dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -50,37 +49,4 @@ export class ParentDashboardComponent {
     },
   ];
 
-  readonly messages = [
-    {
-      id: 1,
-      from: 'Mrs. Davis',
-      subject: 'English Literature',
-      preview: 'Alex has strong reading comprehension but the last essay draft needs work on structure and paragraph cohesion — worth addressing before the next assignment.',
-      time: '4 days ago',
-      unread: true,
-    },
-    {
-      id: 2,
-      from: 'Dr. Patel',
-      subject: 'Physics',
-      preview: 'Outstanding lab session this week. I\'d strongly encourage Alex to consider the Science Olympiad team — it would be a great fit.',
-      time: '1 week ago',
-      unread: false,
-    },
-    {
-      id: 3,
-      from: 'Mr. Thompson',
-      subject: 'Mathematics',
-      preview: 'Chapter 8 algebra test is next Friday. Alex has been very solid this term — a bit of revision this week should be enough.',
-      time: '6 days ago',
-      unread: true,
-    },
-  ];
-
-  readonly events = [
-    { id: 1, title: 'Parent-Teacher Conference', date: '15 Nov', tag: 'School' },
-    { id: 2, title: 'Science Fair', date: '20 Nov', tag: 'Event' },
-    { id: 3, title: 'Thanksgiving Break', date: '27 Nov', tag: 'Holiday' },
-    { id: 4, title: 'End of Term', date: '20 Dec', tag: 'Academic' },
-  ];
 }

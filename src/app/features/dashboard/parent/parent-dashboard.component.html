@@ -99,53 +99,13 @@
         </div>
       </div>
 
-      <!-- Messages from teachers -->
-      <div class="card">
-        <div class="card-head">
-          <h2>From teachers</h2>
-          <span class="unread-badge">2 unread</span>
-        </div>
-        <ul class="msg-list">
-          @for (msg of messages; track msg.id) {
-            <li class="msg-item" [class.msg-unread]="msg.unread">
-              <div class="msg-avatar">{{ msg.from.charAt(0) }}</div>
-              <div class="msg-body">
-                <div class="msg-meta">
-                  <span class="msg-from">{{ msg.from }}</span>
-                  <span class="msg-subject-label">{{ msg.subject }}</span>
-                  <span class="msg-time">{{ msg.time }}</span>
-                </div>
-                <p class="msg-preview">{{ msg.preview }}</p>
-              </div>
-            </li>
-          }
-        </ul>
-      </div>
 
     </div>
 
     <!-- Right sidebar -->
     <div class="col-right">
 
-      <!-- Upcoming events -->
-      <div class="card">
-        <div class="card-head">
-          <h2>Coming up</h2>
-        </div>
-        <ul class="event-list">
-          @for (event of events; track event.id) {
-            <li class="event-item">
-              <span class="event-date">{{ event.date }}</span>
-              <div class="event-info">
-                <span class="event-title">{{ event.title }}</span>
-                <span class="event-tag tag-{{ event.tag | lowercase }}">{{ event.tag }}</span>
-              </div>
-            </li>
-          }
-        </ul>
-      </div>
-
-      <!-- AI CTA -->
+<!-- AI CTA -->
       <div class="card card-cta">
         <div class="cta-icon"><mat-icon>auto_awesome</mat-icon></div>
         <p class="cta-title">Need tutors or materials?</p>
