@@ -89,6 +89,12 @@
     <header class="topbar">
       <div class="topbar-left">
         <h2 class="page-title">{{ pageTitle() }}</h2>
+        @if (auth.user()?.role === 'parent') {
+          <span class="device-online">
+            <span class="device-dot"></span>
+            Zaki Device · Online
+          </span>
+        }
       </div>
       <div class="topbar-right">
         <button class="topbar-icon-btn" aria-label="Search">
