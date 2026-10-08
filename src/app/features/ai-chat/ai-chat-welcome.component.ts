@@ -1,55 +1,30 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { SuggestionCardComponent } from './suggestion-card.component';
+import { RouterLink } from '@angular/router';
 import { AiChatService } from './ai-chat.service';
 
-interface Suggestion {
-  icon: string;
-  title: string;
-  description: string;
-  gradient: string;
-}
+interface Prompt { icon: string; label: string; message: string; }
 
-const SUGGESTIONS: Suggestion[] = [
-  {
-    icon: 'devices',
-    gradient: 'linear-gradient(135deg, #7C3AED 0%, #6366F1 100%)',
-    title: 'How does the Zaki device work?',
-    description: 'Learn how Zaki helps kids study, quiz and grow at home',
-  },
-  {
-    icon: 'supervisor_account',
-    gradient: 'linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%)',
-    title: 'What can parents track?',
-    description: 'See grades, activity, AI insights and progress reports',
-  },
-  {
-    icon: 'school',
-    gradient: 'linear-gradient(135deg, #059669 0%, #0EA5E9 100%)',
-    title: 'What subjects does Zaki cover?',
-    description: 'Explore the curriculum — maths, science, history and more',
-  },
-  {
-    icon: 'auto_awesome',
-    gradient: 'linear-gradient(135deg, #D97706 0%, #EF4444 100%)',
-    title: 'How does Zaki AI personalise learning?',
-    description: 'Understand how the AI adapts to each child\'s pace and needs',
-  },
+const PROMPTS: Prompt[] = [
+  { icon: 'devices',            label: 'How does the Zaki device work?',       message: 'How does the Zaki device work?' },
+  { icon: 'supervisor_account', label: 'What can parents see and track?',       message: 'What can parents see and track in the Zaki portal?' },
+  { icon: 'school',             label: 'What subjects does Zaki cover?',        message: 'What subjects does Zaki cover?' },
+  { icon: 'auto_awesome',       label: 'How does Zaki AI personalise learning?', message: 'How does Zaki AI personalise learning for each child?' },
 ];
 
 @Component({
   selector: 'app-ai-chat-welcome',
   standalone: true,
-  imports: [MatIconModule, SuggestionCardComponent],
+  imports: [MatIconModule, RouterLink],
   templateUrl: './ai-chat-welcome.component.html',
   styleUrl: './ai-chat-welcome.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AiChatWelcomeComponent {
-  protected suggestions = SUGGESTIONS;
-  private service = inject(AiChatService);
+  protected readonly prompts = PROMPTS;
+  private readonly service = inject(AiChatService);
 
-  protected useSuggestion(title: string): void {
-    this.service.sendMessage(title);
+  protected send(message: string): void {
+    this.service.sendMessage(message);
   }
 }
