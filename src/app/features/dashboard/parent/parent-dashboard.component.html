@@ -58,8 +58,8 @@
           <span class="card-badge">Term 3 · 2026</span>
         </div>
         <div class="rings-row">
-          @for (m of mastery; track m.subject) {
-            <div class="ring-item">
+          @for (m of mastery; track m.subject; let i = $index) {
+            <div class="ring-item" [style.animation-delay]="(0.35 + i * 0.09) + 's'">
               <div class="ring-wrap">
                 <svg class="ring-svg" viewBox="0 0 88 88" aria-hidden="true">
                   <circle cx="44" cy="44" r="36" fill="none" [attr.stroke]="m.track" stroke-width="7"/>
@@ -72,6 +72,7 @@
                     [attr.stroke-dashoffset]="ringOffset(m.score)"
                     transform="rotate(-90 44 44)"
                     class="ring-arc"
+                    [style.animation-delay]="(0.35 + i * 0.09) + 's'"
                   />
                 </svg>
                 <div class="ring-center">
@@ -92,8 +93,8 @@
           <span class="live-pill"><span class="live-dot"></span>Live</span>
         </div>
         <div class="activity-feed">
-          @for (a of todayActivity; track a.time) {
-            <div class="activity-row">
+          @for (a of todayActivity; track a.time; let i = $index) {
+            <div class="activity-row" [style.animation-delay]="(0.5 + i * 0.07) + 's'">
               <span class="act-time">{{ a.time }}</span>
               <div class="act-icon icon-{{ a.color }}"><mat-icon>{{ a.icon }}</mat-icon></div>
               <div class="act-body">
@@ -166,8 +167,9 @@
           <span class="card-badge">3 earned</span>
         </div>
         <div class="achievements-grid">
-          @for (a of achievements; track a.label) {
-            <div class="achievement" [class.locked]="!a.earned">
+          @for (a of achievements; track a.label; let i = $index) {
+            <div class="achievement" [class.locked]="!a.earned"
+              [style.animation-delay]="(0.7 + i * 0.07) + 's'">
               <div class="ach-icon" [style.background]="a.bg">
                 <mat-icon [style.color]="a.color">{{ a.icon }}</mat-icon>
               </div>
