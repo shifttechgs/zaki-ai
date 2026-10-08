@@ -18,14 +18,6 @@ export class ParentDashboardComponent {
     { label: 'Class Rank', value: '#36', sub: 'out of 180 students', icon: 'emoji_events', color: 'amber' },
   ];
 
-  readonly subjects = [
-    { name: 'History',     grade: 'A+', score: 95, teacher: 'Ms. Garcia',   color: 'amber',  watch: false },
-    { name: 'Physics',     grade: 'A',  score: 92, teacher: 'Dr. Patel',    color: 'green',  watch: false },
-    { name: 'Mathematics', grade: 'A',  score: 88, teacher: 'Mr. Thompson', color: 'purple', watch: false },
-    { name: 'English',     grade: 'B+', score: 76, teacher: 'Mrs. Davis',   color: 'blue',   watch: true  },
-    { name: 'Biology',     grade: 'B',  score: 74, teacher: 'Mr. Chen',     color: 'red',    watch: true  },
-  ];
-
   readonly focusAreas = [
     {
       id: 1,

@@ -37,37 +37,7 @@
     <!-- Main column -->
     <div class="col-main">
 
-      <!-- Subject grades -->
-      <div class="card">
-        <div class="card-head">
-          <h2>How Alex is doing</h2>
-          <span class="watch-hint">
-            <span class="watch-dot"></span>
-            2 subjects to watch
-          </span>
-        </div>
-        <div class="subjects">
-          @for (s of subjects; track s.name) {
-            <div class="subject-row" [class.subject-watch]="s.watch">
-              <div class="subject-left">
-                <span class="subject-name">{{ s.name }}</span>
-                <span class="subject-teacher">{{ s.teacher }}</span>
-              </div>
-              <div class="subject-track">
-                <div class="subject-bar bar-{{ s.color }}" [style.width.%]="s.score"></div>
-              </div>
-              <div class="subject-right">
-                <span class="grade-chip grade-{{ s.color }}">{{ s.grade }}</span>
-                @if (s.watch) {
-                  <span class="watch-tag">watch</span>
-                }
-              </div>
-            </div>
-          }
-        </div>
-      </div>
-
-      <!-- Focus this week -->
+<!-- Focus this week -->
       <div class="card card-focus">
         <div class="card-head">
           <h2>Where to focus this week</h2>
