@@ -1,55 +1,42 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { SuggestionCardComponent } from '../../../ai-chat/suggestion-card.component';
 import { AiChatService } from '../../../ai-chat/ai-chat.service';
 
-interface Suggestion {
+interface Prompt {
   icon: string;
-  title: string;
-  description: string;
-  gradient: string;
+  label: string;
+  message: string;
 }
 
-const SUGGESTIONS: Suggestion[] = [
-  {
-    icon: 'insights',
-    gradient: 'linear-gradient(135deg, #7C3AED 0%, #6366F1 100%)',
-    title: 'How is Alex performing this term?',
-    description: 'Full breakdown of grades, GPA and class ranking',
-  },
-  {
-    icon: 'stars',
-    gradient: 'linear-gradient(135deg, #059669 0%, #0EA5E9 100%)',
-    title: "What are Alex's strengths and weaknesses?",
-    description: 'Understand where Alex shines and where to focus',
-  },
-  {
-    icon: 'auto_fix_high',
-    gradient: 'linear-gradient(135deg, #D97706 0%, #EF4444 100%)',
-    title: 'What does Alex need to improve?',
-    description: 'AI-generated action plan with priority steps',
-  },
-  {
-    icon: 'people',
-    gradient: 'linear-gradient(135deg, #0EA5E9 0%, #7C3AED 100%)',
-    title: 'Find me tutors near me',
-    description: 'Recommended tutors for Alex\'s weakest subjects',
-  },
+const PROMPTS: Prompt[] = [
+  { icon: 'insights',      label: 'How is Alex doing?',         message: 'Give me a full summary of how Alex is doing this term' },
+  { icon: 'flag',          label: 'What needs attention?',      message: 'What does Alex need to work on most right now?' },
+  { icon: 'people',        label: 'Find tutors near me',        message: 'Find me tutors near me for Alex' },
+  { icon: 'collections_bookmark', label: 'Suggest materials',  message: 'Suggest learning materials and resources for Alex' },
+];
+
+const CHILD_STATS = [
+  { label: 'GPA',        value: '3.7' },
+  { label: 'Attendance', value: '94%' },
+  { label: 'Class Rank', value: '#36' },
+  { label: 'Missing',    value: '0'   },
 ];
 
 @Component({
   selector: 'app-parent-ai-chat-welcome',
   standalone: true,
-  imports: [MatIconModule, SuggestionCardComponent],
+  imports: [MatIconModule],
   templateUrl: './parent-ai-chat-welcome.component.html',
   styleUrl: './parent-ai-chat-welcome.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ParentAiChatWelcomeComponent {
-  protected readonly suggestions = SUGGESTIONS;
+  protected readonly prompts = PROMPTS;
+  protected readonly stats = CHILD_STATS;
+
   private readonly service = inject(AiChatService);
 
-  protected useSuggestion(title: string): void {
-    this.service.sendMessage(title);
+  protected send(message: string): void {
+    this.service.sendMessage(message);
   }
 }
