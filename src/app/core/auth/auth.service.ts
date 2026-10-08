@@ -76,6 +76,23 @@ export class AuthService {
     return { ok: true };
   }
 
+  register(name: string, email: string, password: string): { ok: boolean; error?: string } {
+    if (DEMO_USERS.find(u => u.email.toLowerCase() === email.toLowerCase())) {
+      return { ok: false, error: 'An account with this email already exists.' };
+    }
+    const initials = name.trim().split(/\s+/).map(p => p[0]).join('').toUpperCase().slice(0, 2);
+    const authUser: AuthUser = {
+      id: `u${Date.now()}`,
+      email,
+      name: name.trim(),
+      initials: initials || '?',
+      role: 'parent',
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(authUser));
+    this._user.set(authUser);
+    return { ok: true };
+  }
+
   logout(): void {
     localStorage.removeItem(STORAGE_KEY);
     this._user.set(null);
