@@ -12,28 +12,28 @@ interface Suggestion {
 
 const SUGGESTIONS: Suggestion[] = [
   {
-    icon: 'schema',
-    gradient: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
-    title: 'Review a migration plan',
-    description: 'Analyze your database or codebase migration strategy',
+    icon: 'devices',
+    gradient: 'linear-gradient(135deg, #7C3AED 0%, #6366F1 100%)',
+    title: 'How does the Zaki device work?',
+    description: 'Learn how Zaki helps kids study, quiz and grow at home',
   },
   {
-    icon: 'summarize',
+    icon: 'supervisor_account',
     gradient: 'linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%)',
-    title: 'Summarize a long document',
-    description: 'Distill key points from lengthy reports or articles',
+    title: 'What can parents track?',
+    description: 'See grades, activity, AI insights and progress reports',
   },
   {
-    icon: 'rocket_launch',
-    gradient: 'linear-gradient(135deg, #F59E0B 0%, #EF4444 100%)',
-    title: 'Brainstorm launch angles',
-    description: 'Generate creative ideas for your product or campaign',
+    icon: 'school',
+    gradient: 'linear-gradient(135deg, #059669 0%, #0EA5E9 100%)',
+    title: 'What subjects does Zaki cover?',
+    description: 'Explore the curriculum — maths, science, history and more',
   },
   {
-    icon: 'bug_report',
-    gradient: 'linear-gradient(135deg, #10B981 0%, #0EA5E9 100%)',
-    title: 'Debug a failing query',
-    description: 'Diagnose and fix SQL or API query issues',
+    icon: 'auto_awesome',
+    gradient: 'linear-gradient(135deg, #D97706 0%, #EF4444 100%)',
+    title: 'How does Zaki AI personalise learning?',
+    description: 'Understand how the AI adapts to each child\'s pace and needs',
   },
 ];
 

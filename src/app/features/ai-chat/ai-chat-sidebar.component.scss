@@ -59,34 +59,47 @@ aside {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 20px 16px 12px;
+  padding: 16px 14px 14px;
+  border-bottom: 1px solid var(--sidebar-border);
   flex-shrink: 0;
 }
 
-.brand-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
-  background: var(--gradient-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.brand-robot {
+  width: 40px;
+  height: 46px;
+  min-width: 40px;
   flex-shrink: 0;
-
-  mat-icon {
-    font-size: 16px;
-    width: 16px;
-    height: 16px;
-    color: #fff;
-  }
+  filter: drop-shadow(0 3px 10px rgba(124,58,237,.4));
+  svg { width: 100%; height: 100%; }
 }
+
+.brand-text { display: flex; flex-direction: column; min-width: 0; }
 
 .brand-name {
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  line-height: 1.1;
   color: var(--sidebar-text);
-  letter-spacing: -0.01em;
+  letter-spacing: 0.07em;
   white-space: nowrap;
+  color: var(--text-primary);
+}
+
+.brand-ai {
+  background: linear-gradient(135deg, #8B5CF6 0%, #60A5FA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.brand-tagline {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+  text-transform: uppercase;
+  font-weight: 500;
 }
 
 // ── New chat button ───────────────────────────────────────────────────────────
