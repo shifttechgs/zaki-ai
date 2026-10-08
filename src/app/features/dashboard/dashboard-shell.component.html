@@ -42,31 +42,43 @@
 
     <!-- Navigation -->
     <nav class="nav" aria-label="Main navigation">
+
+      <span class="nav-section-label">Navigate</span>
+
       @for (item of navItems(); track item.label) {
+        @if (item.ai) {
+          <div class="nav-divider"></div>
+          <span class="nav-section-label">AI Assistant</span>
+        }
         <a
           class="nav-link"
+          [class.nav-ai]="item.ai"
           [routerLink]="item.path"
           routerLinkActive="nav-active"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          <mat-icon>{{ item.icon }}</mat-icon>
-          <span>{{ item.label }}</span>
+          <span class="nav-icon"><mat-icon>{{ item.icon }}</mat-icon></span>
+          <span class="nav-label">{{ item.label }}</span>
+          @if (item.ai) {
+            <span class="nav-ai-badge">NEW</span>
+          }
         </a>
       }
+
     </nav>
 
-    <!-- Sidebar footer -->
+    <!-- Footer -->
     <div class="sidebar-footer">
-      <div class="user-info">
+      <div class="user-card">
         <div class="user-avatar">{{ auth.user()?.initials }}</div>
         <div class="user-meta">
           <span class="user-name">{{ auth.user()?.name }}</span>
           <span class="user-role">{{ userRoleLabel() }}</span>
         </div>
+        <button class="logout-btn" type="button" (click)="logout()" aria-label="Log out">
+          <mat-icon>logout</mat-icon>
+        </button>
       </div>
-      <button class="logout-btn" type="button" (click)="logout()" aria-label="Log out">
-        <mat-icon>logout</mat-icon>
-      </button>
     </div>
 
   </aside>
