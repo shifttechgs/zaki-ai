@@ -43,12 +43,14 @@
     <!-- Navigation -->
     <nav class="nav" aria-label="Main navigation">
 
-      <span class="nav-section-label">Navigate</span>
-
-      @for (item of navItems(); track item.label) {
-        @if (item.ai) {
+      @for (item of navItems(); track item.label; let first = $first) {
+        @if (first && item.ai) {
+          <span class="nav-section-label">AI Overview</span>
+        } @else if (!first && item.ai) {
           <div class="nav-divider"></div>
           <span class="nav-section-label">AI Assistant</span>
+        } @else if (first) {
+          <span class="nav-section-label">Navigate</span>
         }
         <a
           class="nav-link"
@@ -60,7 +62,7 @@
           <span class="nav-icon"><mat-icon>{{ item.icon }}</mat-icon></span>
           <span class="nav-label">{{ item.label }}</span>
           @if (item.ai) {
-            <span class="nav-ai-badge">NEW</span>
+            <span class="nav-ai-badge">AI</span>
           }
         </a>
       }

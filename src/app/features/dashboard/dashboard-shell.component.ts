@@ -21,13 +21,12 @@ const STUDENT_NAV: NavItem[] = [
 ];
 
 const PARENT_NAV: NavItem[] = [
-  { label: 'Overview',    path: '/dashboard/parent',           icon: 'home' },
+  { label: 'Overview',    path: '/dashboard/parent/ai-chat',   icon: 'home',           ai: true },
   { label: 'My Children', path: '/dashboard/parent',           icon: 'people' },
   { label: 'Grades',      path: '/dashboard/parent',           icon: 'bar_chart' },
   { label: 'Attendance',  path: '/dashboard/parent',           icon: 'event_available' },
   { label: 'Calendar',    path: '/dashboard/parent',           icon: 'event' },
   { label: 'Messages',    path: '/dashboard/parent',           icon: 'chat' },
-  { label: 'Ask AI',      path: '/dashboard/parent/ai-chat',   icon: 'auto_awesome', ai: true },
 ];
 
 @Component({

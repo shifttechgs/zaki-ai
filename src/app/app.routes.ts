@@ -41,13 +41,7 @@ export const routes: Routes = [
             m => m.StudentAiChatComponent,
           ),
       },
-      {
-        path: 'parent',
-        loadComponent: () =>
-          import('./features/dashboard/parent/parent-dashboard.component').then(
-            m => m.ParentDashboardComponent,
-          ),
-      },
+      { path: 'parent', redirectTo: 'parent/ai-chat', pathMatch: 'full' },
       {
         path: 'parent/ai-chat',
         loadComponent: () =>
