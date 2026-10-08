@@ -92,127 +92,46 @@
 .tagline {
   font-size: 15px;
   color: #697386;
-  margin: 0 0 20px;
+  margin: 0 0 32px;
   line-height: 1.5;
   animation: fadeSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.26s both;
 }
 
-// ── Feature strip ─────────────────────────────────────────────────────────────
-.features {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 28px;
-  animation: fadeSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.34s both;
-}
-
-.feature {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 12.5px;
-  font-weight: 600;
-  color: #697386;
-  background: #fff;
-  border: 1px solid #E8EDF2;
-  border-radius: 100px;
-  padding: 4px 12px 4px 8px;
-  box-shadow: 0 1px 3px rgba(10,37,64,.04);
-
-  mat-icon {
-    font-size: 14px;
-    width: 14px;
-    height: 14px;
-    line-height: 14px;
-    color: #7C3AED;
-  }
-}
-
-.feature-dot {
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: #C8D2DC;
-}
-
-// ── Prompts ───────────────────────────────────────────────────────────────────
-.prompts-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  width: 100%;
-  margin-bottom: 24px;
-  animation: fadeSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.42s both;
-}
-
-.prompt-btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: #fff;
-  border: 1px solid #E8EDF2;
-  border-radius: 12px;
-  padding: 14px 16px;
-  color: #425466;
-  font-size: 13.5px;
-  font-weight: 500;
-  cursor: pointer;
-  text-align: left;
-  font-family: inherit;
-  box-shadow: 0 1px 3px rgba(10,37,64,.04);
-  transition: background .15s, border-color .15s, box-shadow .15s, transform .1s;
-
-  mat-icon {
-    font-size: 19px;
-    width: 19px;
-    height: 19px;
-    line-height: 19px;
-    color: #7C3AED;
-    flex-shrink: 0;
-  }
-
-  &:hover {
-    background: #F5F3FF;
-    border-color: rgba(124,58,237,.25);
-    color: #0A2540;
-    box-shadow: 0 4px 16px rgba(124,58,237,.1);
-    transform: translateY(-1px);
-    mat-icon { color: #6D28D9; }
-  }
-
-  &:active { transform: translateY(0); }
-}
-
-// ── Auth CTA ──────────────────────────────────────────────────────────────────
+// ── Auth CTAs ─────────────────────────────────────────────────────────────────
 .auth-row {
   display: flex;
   align-items: center;
   gap: 12px;
-  animation: fadeSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.52s both;
+  animation: fadeSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.36s both;
 }
 
 .btn-signin {
   display: inline-flex;
   align-items: center;
-  background: #0A2540;
+  background: #7C3AED;
   color: #fff;
   border-radius: 100px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
-  padding: 9px 20px;
+  padding: 11px 28px;
   text-decoration: none;
-  transition: background .15s;
-  &:hover { background: #1a3a5c; }
+  box-shadow: 0 4px 16px rgba(124,58,237,.4);
+  transition: background .15s, box-shadow .15s;
+  &:hover { background: #6D28D9; box-shadow: 0 6px 20px rgba(124,58,237,.5); }
 }
 
-.auth-sep { font-size: 13px; color: #C8D2DC; }
-
 .btn-signup {
-  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  background: #fff;
+  color: #0A2540;
+  border: 1px solid #E8EDF2;
+  border-radius: 100px;
+  font-size: 14px;
   font-weight: 600;
-  color: #7C3AED;
+  padding: 11px 28px;
   text-decoration: none;
-  &:hover { color: #6D28D9; text-decoration: underline; }
+  box-shadow: 0 1px 3px rgba(10,37,64,.06);
+  transition: background .15s, border-color .15s;
+  &:hover { background: #F7F9FC; border-color: #C8D2DC; }
 }

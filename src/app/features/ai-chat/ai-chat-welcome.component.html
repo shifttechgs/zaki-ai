@@ -45,29 +45,9 @@
     <h2 class="brand">ZAKI <span class="brand-ai">AI</span></h2>
     <p class="tagline">Your child's AI learning companion</p>
 
-    <!-- Feature strip -->
-    <div class="features">
-      <span class="feature"><mat-icon>devices</mat-icon>Physical device</span>
-      <span class="feature-dot"></span>
-      <span class="feature"><mat-icon>supervisor_account</mat-icon>Parent dashboard</span>
-      <span class="feature-dot"></span>
-      <span class="feature"><mat-icon>school</mat-icon>K-12 curriculum</span>
-    </div>
-
-    <!-- Prompts -->
-    <div class="prompts-grid">
-      @for (p of prompts; track p.label) {
-        <button class="prompt-btn" (click)="send(p.message)">
-          <mat-icon>{{ p.icon }}</mat-icon>
-          <span>{{ p.label }}</span>
-        </button>
-      }
-    </div>
-
-    <!-- Sign in CTA -->
+    <!-- Auth CTAs -->
     <div class="auth-row">
-      <a class="btn-signin" [routerLink]="['/auth/sign-in']">Sign in to your portal</a>
-      <span class="auth-sep">·</span>
+      <a class="btn-signin" [routerLink]="['/auth/sign-in']">Sign in</a>
       <a class="btn-signup" [routerLink]="['/auth/sign-up']">Create account</a>
     </div>
 
