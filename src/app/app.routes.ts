@@ -49,6 +49,41 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'parent/children',
+        loadComponent: () =>
+          import('./features/dashboard/parent/parent-dashboard.component').then(
+            m => m.ParentDashboardComponent,
+          ),
+      },
+      {
+        path: 'parent/grades',
+        loadComponent: () =>
+          import('./features/dashboard/parent/parent-dashboard.component').then(
+            m => m.ParentDashboardComponent,
+          ),
+      },
+      {
+        path: 'parent/attendance',
+        loadComponent: () =>
+          import('./features/dashboard/parent/parent-dashboard.component').then(
+            m => m.ParentDashboardComponent,
+          ),
+      },
+      {
+        path: 'parent/calendar',
+        loadComponent: () =>
+          import('./features/dashboard/parent/parent-dashboard.component').then(
+            m => m.ParentDashboardComponent,
+          ),
+      },
+      {
+        path: 'parent/messages',
+        loadComponent: () =>
+          import('./features/dashboard/parent/parent-dashboard.component').then(
+            m => m.ParentDashboardComponent,
+          ),
+      },
+      {
         path: 'parent/ai-chat',
         loadComponent: () =>
           import('./features/dashboard/parent/parent-ai-chat/parent-ai-chat.component').then(
