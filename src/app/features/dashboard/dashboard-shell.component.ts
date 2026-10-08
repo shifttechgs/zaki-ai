@@ -1,6 +1,8 @@
 import { Component, ChangeDetectionStrategy, inject, computed } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet, NavigationEnd } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { filter, map, startWith } from 'rxjs/operators';
 import { AuthService } from '../../core/auth/auth.service';
 
 interface NavItem {
@@ -30,6 +32,18 @@ const PARENT_NAV: NavItem[] = [
   { label: 'Ask AI',      path: '/dashboard/parent/ai-chat',        icon: 'auto_awesome', ai: true },
 ];
 
+const ROUTE_TITLES: Record<string, string> = {
+  parent:     'Overview',
+  student:    'Dashboard',
+  children:   'My Children',
+  grades:     'Grades',
+  attendance: 'Attendance',
+  reports:    'Reports',
+  messages:   'Messages',
+  calendar:   'Calendar',
+  'ai-chat':  'Ask AI',
+};
+
 @Component({
   selector: 'app-dashboard-shell',
   standalone: true,
@@ -40,6 +54,21 @@ const PARENT_NAV: NavItem[] = [
 })
 export class DashboardShellComponent {
   protected readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
+
+  private readonly currentUrl = toSignal(
+    this.router.events.pipe(
+      filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+      map(e => e.urlAfterRedirects),
+      startWith(this.router.url),
+    ),
+    { initialValue: this.router.url },
+  );
+
+  protected readonly pageTitle = computed<string>(() => {
+    const segment = (this.currentUrl() ?? '').split('/').pop() ?? '';
+    return ROUTE_TITLES[segment] ?? 'Overview';
+  });
 
   protected readonly navItems = computed<NavItem[]>(() => {
     const role = this.auth.user()?.role;

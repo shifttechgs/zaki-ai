@@ -83,8 +83,37 @@
 
   </aside>
 
-  <main class="main">
-    <router-outlet />
-  </main>
+  <div class="main-col">
+
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h2 class="page-title">{{ pageTitle() }}</h2>
+      </div>
+      <div class="topbar-right">
+        <button class="topbar-icon-btn" aria-label="Search">
+          <mat-icon>search</mat-icon>
+        </button>
+        <button class="topbar-icon-btn notif-btn" aria-label="Notifications">
+          <mat-icon>notifications</mat-icon>
+          <span class="notif-dot"></span>
+        </button>
+        <div class="topbar-sep"></div>
+        <div class="topbar-user">
+          <div class="topbar-avatar">{{ auth.user()?.initials }}</div>
+          <div class="topbar-meta">
+            <span class="topbar-name">{{ auth.user()?.name }}</span>
+            <span class="topbar-role">{{ userRoleLabel() }}</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page content -->
+    <main class="main">
+      <router-outlet />
+    </main>
+
+  </div>
 
 </div>
