@@ -29,6 +29,7 @@ const PARENT_NAV: NavItem[] = [
   { label: 'Attendance',  path: '/dashboard/parent/attendance',     icon: 'event_available' },
   { label: 'Reports',     path: '/dashboard/parent/reports',        icon: 'insert_chart' },
   { label: 'Messages',    path: '/dashboard/parent/messages',       icon: 'chat' },
+  { label: 'Settings',    path: '/dashboard/parent/settings',       icon: 'settings' },
   { label: 'Ask AI',      path: '/dashboard/parent/ai-chat',        icon: 'auto_awesome', ai: true },
 ];
 

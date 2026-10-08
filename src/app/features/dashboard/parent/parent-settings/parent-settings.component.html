@@ -1,0 +1,351 @@
+<div class="page">
+
+  <!-- Page header -->
+  <header class="page-head">
+    <div>
+      <h1>Device Settings</h1>
+      <p>Control what Alex can access and do on the Zaki device</p>
+    </div>
+    <button class="save-btn" [class.saved]="saved()" (click)="save()">
+      @if (saved()) {
+        <mat-icon>check_circle</mat-icon>
+        Saved
+      } @else {
+        <mat-icon>save</mat-icon>
+        Save changes
+      }
+    </button>
+  </header>
+
+  <div class="settings-layout">
+
+    <!-- Left sticky nav -->
+    <nav class="settings-nav" aria-label="Settings sections">
+      <a href="#content-filters" class="nav-item">
+        <mat-icon>filter_list</mat-icon>Content Filters
+      </a>
+      <a href="#screen-time" class="nav-item">
+        <mat-icon>schedule</mat-icon>Screen Time
+      </a>
+      <a href="#activity-controls" class="nav-item">
+        <mat-icon>tune</mat-icon>Activity Controls
+      </a>
+      <a href="#notifications" class="nav-item">
+        <mat-icon>notifications</mat-icon>Notifications
+      </a>
+      <a href="#parental-pin" class="nav-item">
+        <mat-icon>lock</mat-icon>Parental PIN
+      </a>
+    </nav>
+
+    <!-- Settings content -->
+    <div class="settings-content">
+
+      <!-- ── 1. Content Filters ─────────────────────────────────────────────── -->
+      <section id="content-filters" class="settings-section">
+        <div class="section-head">
+          <div class="section-icon icon-blue"><mat-icon>filter_list</mat-icon></div>
+          <div>
+            <h2>Content Filters</h2>
+            <p>Choose which subjects Alex can study and what content gets blocked</p>
+          </div>
+        </div>
+
+        <!-- Allowed subjects -->
+        <div class="card">
+          <div class="card-head"><h3>Allowed Subjects</h3></div>
+          <div class="subjects-grid">
+            @for (s of subjects(); track s.id) {
+              <div class="subject-card" [class.subject-on]="s.enabled" [class.subject-off]="!s.enabled">
+                <div class="subject-icon"><mat-icon>{{ s.icon }}</mat-icon></div>
+                <span class="subject-name">{{ s.name }}</span>
+                <label class="toggle">
+                  <input type="checkbox" [checked]="s.enabled" (change)="toggleSubject(s.id)">
+                  <span class="track"><span class="thumb"></span></span>
+                </label>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Blocked categories -->
+        <div class="card">
+          <div class="card-head">
+            <h3>Content Blocking</h3>
+            <span class="card-badge">Always recommended</span>
+          </div>
+          @for (c of blockedCategories(); track c.id) {
+            <div class="setting-row">
+              <div class="setting-info">
+                <span class="setting-name">{{ c.name }}</span>
+                <span class="setting-desc">{{ c.desc }}</span>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" [checked]="c.blocked" (change)="toggleCategory(c.id)">
+                <span class="track"><span class="thumb"></span></span>
+              </label>
+            </div>
+          }
+        </div>
+      </section>
+
+      <!-- ── 2. Screen Time ─────────────────────────────────────────────────── -->
+      <section id="screen-time" class="settings-section">
+        <div class="section-head">
+          <div class="section-icon icon-amber"><mat-icon>schedule</mat-icon></div>
+          <div>
+            <h2>Screen Time</h2>
+            <p>Set daily limits, session lengths and a weekly usage schedule</p>
+          </div>
+        </div>
+
+        <!-- Limits -->
+        <div class="card">
+          <div class="card-head"><h3>Usage Limits</h3></div>
+
+          <div class="limit-row">
+            <div class="limit-info">
+              <div class="limit-label-row">
+                <span class="setting-name">Daily Limit</span>
+                <label class="toggle">
+                  <input type="checkbox" [checked]="dailyLimitEnabled()" (change)="dailyLimitEnabled.update(v=>!v)">
+                  <span class="track"><span class="thumb"></span></span>
+                </label>
+              </div>
+              <span class="setting-desc">Maximum total Zaki usage per day</span>
+            </div>
+            @if (dailyLimitEnabled()) {
+              <div class="slider-wrap">
+                <input type="range" class="slider" min="1" max="8" step="1"
+                  [value]="dailyLimitHours()" (input)="setDailyLimit($event)">
+                <div class="slider-labels">
+                  <span>1h</span><span>2h</span><span>3h</span><span>4h</span>
+                  <span>5h</span><span>6h</span><span>7h</span><span>8h</span>
+                </div>
+              </div>
+              <span class="limit-value">{{ dailyLimitHours() }}h / day</span>
+            }
+          </div>
+
+          <div class="card-divider"></div>
+
+          <div class="limit-row">
+            <div class="limit-info">
+              <div class="limit-label-row">
+                <span class="setting-name">Session Limit</span>
+                <label class="toggle">
+                  <input type="checkbox" [checked]="sessionLimitEnabled()" (change)="sessionLimitEnabled.update(v=>!v)">
+                  <span class="track"><span class="thumb"></span></span>
+                </label>
+              </div>
+              <span class="setting-desc">Maximum length of a single session before a break</span>
+            </div>
+            @if (sessionLimitEnabled()) {
+              <div class="slider-wrap">
+                <input type="range" class="slider" min="15" max="120" step="15"
+                  [value]="sessionLimitMins()" (input)="setSessionLimit($event)">
+                <div class="slider-labels">
+                  <span>15m</span><span>30m</span><span>45m</span><span>60m</span>
+                  <span>75m</span><span>90m</span><span>105m</span><span>2h</span>
+                </div>
+              </div>
+              <span class="limit-value">{{ sessionLimitMins() }}m / session</span>
+            }
+          </div>
+        </div>
+
+        <!-- Schedule -->
+        <div class="card">
+          <div class="card-head">
+            <h3>Device Schedule</h3>
+            <span class="card-badge">Set allowed hours per day</span>
+          </div>
+          <div class="schedule-list">
+            @for (d of schedule(); track d.day) {
+              <div class="schedule-row" [class.schedule-off]="!d.enabled">
+                <div class="schedule-day">
+                  <label class="toggle">
+                    <input type="checkbox" [checked]="d.enabled" (change)="toggleScheduleDay(d.day)">
+                    <span class="track"><span class="thumb"></span></span>
+                  </label>
+                  <span class="day-name">{{ d.day }}</span>
+                </div>
+                @if (d.enabled) {
+                  <div class="schedule-times">
+                    <select class="time-select" [value]="d.from" (change)="setScheduleTime(d.day, 'from', $event)">
+                      @for (t of timeOptions; track t.value) {
+                        <option [value]="t.value" [selected]="t.value === d.from">{{ t.label }}</option>
+                      }
+                    </select>
+                    <span class="time-sep">to</span>
+                    <select class="time-select" [value]="d.to" (change)="setScheduleTime(d.day, 'to', $event)">
+                      @for (t of timeOptions; track t.value) {
+                        <option [value]="t.value" [selected]="t.value === d.to">{{ t.label }}</option>
+                      }
+                    </select>
+                  </div>
+                } @else {
+                  <span class="schedule-off-label">Blocked all day</span>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 3. Activity Controls ───────────────────────────────────────────── -->
+      <section id="activity-controls" class="settings-section">
+        <div class="section-head">
+          <div class="section-icon icon-purple"><mat-icon>tune</mat-icon></div>
+          <div>
+            <h2>Activity Controls</h2>
+            <p>Enable or disable individual Zaki features for Alex's device</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>Features</h3></div>
+          @for (f of features(); track f.id) {
+            <div class="setting-row">
+              <div class="feature-icon-wrap"><mat-icon>{{ f.icon }}</mat-icon></div>
+              <div class="setting-info">
+                <span class="setting-name">{{ f.name }}</span>
+                <span class="setting-desc">{{ f.desc }}</span>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" [checked]="f.enabled" (change)="toggleFeature(f.id)">
+                <span class="track"><span class="thumb"></span></span>
+              </label>
+            </div>
+          }
+        </div>
+      </section>
+
+      <!-- ── 4. Notifications ───────────────────────────────────────────────── -->
+      <section id="notifications" class="settings-section">
+        <div class="section-head">
+          <div class="section-icon icon-green"><mat-icon>notifications</mat-icon></div>
+          <div>
+            <h2>Notifications</h2>
+            <p>Choose which alerts Zaki sends to keep you informed about Alex</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>Alert Preferences</h3></div>
+          @for (n of notifications(); track n.id) {
+            <div class="setting-row">
+              <div class="setting-info">
+                <span class="setting-name">{{ n.name }}</span>
+                <span class="setting-desc">{{ n.desc }}</span>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" [checked]="n.enabled" (change)="toggleNotification(n.id)">
+                <span class="track"><span class="thumb"></span></span>
+              </label>
+            </div>
+          }
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>Notification Email</h3></div>
+          <div class="email-row">
+            <div class="setting-info">
+              <span class="setting-name">Send alerts to</span>
+              <span class="setting-desc">All notifications will be delivered to this address</span>
+            </div>
+            <input
+              type="email"
+              class="email-input"
+              [value]="notifEmail()"
+              (input)="setNotifEmail($event)"
+              placeholder="your@email.com"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 5. Parental PIN ────────────────────────────────────────────────── -->
+      <section id="parental-pin" class="settings-section">
+        <div class="section-head">
+          <div class="section-icon icon-red"><mat-icon>lock</mat-icon></div>
+          <div>
+            <h2>Parental PIN</h2>
+            <p>Require a PIN to access or change these settings on the Zaki device</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h3>PIN Lock</h3>
+            <label class="toggle">
+              <input type="checkbox" [checked]="pinEnabled()" (change)="pinEnabled.update(v=>!v)">
+              <span class="track"><span class="thumb"></span></span>
+            </label>
+          </div>
+
+          @if (pinEnabled()) {
+            <div class="pin-section">
+              <div class="pin-display-row">
+                <div class="pin-info">
+                  <span class="setting-name">Current PIN</span>
+                  <span class="setting-desc">Used to lock Zaki device settings</span>
+                </div>
+                <div class="pin-value-row">
+                  <span class="pin-value">
+                    @if (pinVisible()) { {{ pin() }} } @else { ● ● ● ● }
+                  </span>
+                  <button class="icon-btn" (click)="togglePinVisibility()" type="button">
+                    <mat-icon>{{ pinVisible() ? 'visibility_off' : 'visibility' }}</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+              @if (!changingPin()) {
+                <button class="change-pin-btn" (click)="startPinChange()" type="button">
+                  <mat-icon>edit</mat-icon>Change PIN
+                </button>
+              } @else {
+                <div class="pin-change-wrap">
+                  <p class="pin-change-label">Enter a new 4-digit PIN</p>
+                  <div class="pin-input-row">
+                    <input
+                      type="password"
+                      class="pin-input"
+                      [value]="newPin()"
+                      (input)="setNewPin($event)"
+                      placeholder="● ● ● ●"
+                      maxlength="4"
+                      inputmode="numeric"
+                    />
+                    <button class="btn-confirm" [disabled]="newPin().length !== 4"
+                      (click)="confirmPinChange()" type="button">Confirm</button>
+                    <button class="btn-cancel" (click)="cancelPinChange()" type="button">Cancel</button>
+                  </div>
+                </div>
+              }
+            </div>
+          } @else {
+            <div class="pin-disabled">
+              <mat-icon>lock_open</mat-icon>
+              <p>PIN lock is off. Anyone with the Zaki device can change settings.</p>
+            </div>
+          }
+        </div>
+      </section>
+
+      <!-- Bottom save bar -->
+      <div class="bottom-bar">
+        <p class="bottom-hint">Changes apply to Alex's Zaki device immediately after saving.</p>
+        <button class="save-btn" [class.saved]="saved()" (click)="save()">
+          @if (saved()) {
+            <mat-icon>check_circle</mat-icon>Saved
+          } @else {
+            <mat-icon>save</mat-icon>Save changes
+          }
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -81,6 +81,13 @@ export const routes: Routes = [
         data: { feature: 'Messages', icon: 'chat', description: 'Direct messaging with teachers and school staff — all in one organised inbox.' },
       },
       {
+        path: 'parent/settings',
+        loadComponent: () =>
+          import('./features/dashboard/parent/parent-settings/parent-settings.component').then(
+            m => m.ParentSettingsComponent,
+          ),
+      },
+      {
         path: 'parent/reports',
         loadComponent: () =>
           import('./features/dashboard/parent/parent-report/parent-report.component').then(
