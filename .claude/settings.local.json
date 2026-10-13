@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:angular-material.fusetheme.com)",
+      "Bash(node -e \"const p=require\\('./package.json'\\); console.log\\(JSON.stringify\\(Object.keys\\({...p.dependencies,...p.devDependencies}\\).filter\\(k=>k.includes\\('material'\\)||k.includes\\('cdk'\\)||k.includes\\('animations'\\)\\), null, 2\\)\\)\")",
+      "Bash(npm install *)",
+      "Bash(node -e \"const p=require\\('./package.json'\\); console.log\\(p.dependencies['@angular/material'], p.dependencies['@angular/cdk']\\)\")",
+      "Bash(npx ng *)",
+      "Bash(timeout 12)",
+      "Bash(Read \"C:\\\\Users\\\\P02665\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--WCBS-Projects-Experiments-Claude-zaki-zaki-portal\\\\6330cb43-4307-4b71-968d-261016399556\\\\tasks\\\\b2cyow8se.output\")",
+      "Bash(npx playwright *)",
+      "Bash(node *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4201/)",
+      "Bash(del verify-temp.mjs)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(rm \"C:\\\\WCBS_Projects\\\\Experiments\\\\Claude\\\\zaki\\\\zaki-portal\\\\screenshot.mjs\")",
+      "Bash(echo \"EXIT $?\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4200/)",
+      "Bash(npm start *)",
+      "Bash(git commit *)",
+      "Bash(vercel --version)",
+      "Bash(vercel whoami *)",
+      "Bash(where playwright *)",
+      "Bash(npx tsc *)",
+      "Bash(vercel logs *)",
+      "mcp__plugin_vercel_vercel__list_deployments",
+      "Bash(npm run *)",
+      "Bash(New-Item -ItemType Directory -Force -Path \"C:\\\\WCBS_Projects\\\\Experiments\\\\Claude\\\\zaki\\\\zaki-portal\\\\src\\\\app\\\\features\\\\dashboard\\\\parent\\\\parent-report\")",
+      "Bash(Out-Null)",
+      "Bash(Write-Output \"done\")",
+      "WebSearch",
+      "WebFetch(domain:www.framer.com)",
+      "WebFetch(domain:www.eleken.co)"
+    ]
+  }
+}
